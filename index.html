@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIERNES. — Calendario de contenido</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #374655;
+    --salvia: #95a996;
+    --dorado: #d4af37;
+    --amarillo: #fdda6a;
+    --grafito: #545f62;
+    --crema: #F5F3EE;
+    --blanco: #ffffff;
+    --borde: #e8e5df;
+    --texto: #1a2530;
+    --texto-muted: #7a8a90;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--crema);
+    color: var(--texto);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--azul);
+    padding: 32px 48px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .header-left .marca {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--blanco);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .header-left .marca span { color: var(--amarillo); }
+  .header-left .subtitulo {
+    font-size: 13px;
+    color: var(--salvia);
+    margin-top: 4px;
+  }
+  .header-right {
+    text-align: right;
+  }
+  .header-right .mes {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blanco);
+    letter-spacing: -0.01em;
+  }
+  .header-right .prog {
+    font-size: 12px;
+    color: var(--salvia);
+    margin-top: 4px;
+  }
+
+  /* MODE BADGE */
+  .mode-bar {
+    background: var(--azul);
+    padding: 0 48px 16px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .mode-badge {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+  .mode-badge.editor {
+    background: var(--amarillo);
+    color: var(--azul);
+  }
+  .mode-badge.reader {
+    background: transparent;
+    color: var(--salvia);
+    border: 1px solid rgba(149,169,150,0.4);
+  }
+  .mode-badge.reader.active {
+    background: rgba(149,169,150,0.15);
+    color: var(--salvia);
+  }
+  .mode-badge.editor.active {
+    background: var(--amarillo);
+    color: var(--azul);
+  }
+  .mode-hint {
+    font-size: 11px;
+    color: var(--salvia);
+    opacity: 0.7;
+    margin-left: 8px;
+  }
+
+  /* CONTAINER */
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap {
+    background: var(--blanco);
+    border-radius: 8px;
+    border: 0.5px solid var(--borde);
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .progress-track {
+    flex: 1;
+    height: 4px;
+    background: var(--borde);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--dorado);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .progress-label { font-size: 13px; color: var(--grafito); white-space: nowrap; }
+  .progress-num { font-size: 13px; font-weight: 700; color: var(--azul); white-space: nowrap; }
+
+  /* WEEK */
+  .week { margin-bottom: 40px; }
+  .week-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--dorado);
+  }
+  .week-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--azul);
+    letter-spacing: -0.01em;
+  }
+  .week-count {
+    font-size: 12px;
+    color: var(--texto-muted);
+    background: var(--borde);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* GRID */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  /* CARD */
+  .post-card {
+    background: var(--blanco);
+    border-radius: 12px;
+    border: 0.5px solid var(--borde);
+    padding: 16px;
+    transition: opacity 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .post-card.done {
+    opacity: 0.5;
+    border-color: var(--borde);
+  }
+  .post-card:hover { border-color: #c8c4bc; }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .card-tags { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+  .tag-network {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .tag-network.instagram { background: #FAEEDA; color: #633806; }
+  .tag-network.linkedin { background: #E6F1FB; color: #0C447C; }
+  .tag-network.stories { background: #EEEDFE; color: #3C3489; }
+  .tag-network.tiktok { background: #FBEAF0; color: #72243E; }
+  .tag-network.youtube { background: #FAECE7; color: #712B13; }
+  .tag-network.newsletter { background: #E1F5EE; color: #085041; }
+
+  .tag-day {
+    font-size: 11px;
+    color: var(--texto-muted);
+  }
+  .tag-type {
+    font-size: 11px;
+    color: var(--texto-muted);
+  }
+
+  .card-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+    accent-color: var(--azul);
+  }
+  .card-checkbox.readonly { pointer-events: none; }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texto);
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .post-card.done .card-title { text-decoration: line-through; }
+
+  .card-published-badge {
+    display: none;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #085041;
+    background: #E1F5EE;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .post-card.done .card-published-badge { display: inline-block; }
+
+  .card-toggle-body {
+    font-size: 12px;
+    color: var(--dorado);
+    font-weight: 600;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .card-body {
+    margin-top: 10px;
+    padding: 12px;
+    background: var(--crema);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--grafito);
+    white-space: pre-wrap;
+    line-height: 1.7;
+    display: none;
+  }
+  .card-body.visible { display: block; }
+
+  /* EDITOR CONTROLS */
+  .editor-controls {
+    display: none;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+  .editor-mode .editor-controls { display: flex; }
+  .btn-delete {
+    background: none;
+    border: none;
+    color: var(--texto-muted);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .btn-delete:hover { color: #c0392b; background: #fdf0ef; }
+
+  /* ADD BUTTONS */
+  .add-controls {
+    display: none;
+    gap: 10px;
+    margin-top: 32px;
+  }
+  .editor-mode .add-controls { display: flex; }
+  .btn-add {
+    padding: 10px 20px;
+    background: var(--azul);
+    color: var(--blanco);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-add:hover { background: #2a3540; }
+  .btn-add.secondary {
+    background: transparent;
+    color: var(--azul);
+    border: 1.5px solid var(--borde);
+  }
+  .btn-add.secondary:hover { background: var(--borde); }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--grafito);
+  }
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--azul);
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-marca { font-size: 16px; font-weight: 800; color: var(--blanco); letter-spacing: -0.02em; }
+  .footer-marca span { color: var(--amarillo); }
+  .footer-by { font-size: 11px; color: var(--salvia); }
+
+  /* READER OVERLAY MSG */
+  .reader-msg {
+    display: none;
+    background: rgba(55,70,85,0.08);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--grafito);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .reader-mode .reader-msg { display: block; }
+
+  @media (max-width: 600px) {
+    .header { padding: 24px 20px 20px; flex-direction: column; gap: 12px; align-items: flex-start; }
+    .mode-bar { padding: 0 20px 14px; }
+    .container { padding: 24px 16px 60px; }
+    .footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="marca">VIERNES<span>.</span></div>
+    <div class="subtitulo">Calendario de contenido · Desde Adentro</div>
+  </div>
+  <div class="header-right">
+    <div class="mes">Julio 2026</div>
+    <div class="prog" id="header-prog">Cargando...</div>
+  </div>
+</div>
+
+<div class="mode-bar">
+  <button class="mode-badge editor active" id="btn-editor" onclick="setMode('editor')">Modo editor</button>
+  <button class="mode-badge reader" id="btn-reader" onclick="setMode('reader')">Modo cliente</button>
+  <span class="mode-hint" id="mode-hint">Podés tildar, editar y borrar</span>
+</div>
+
+<div class="container" id="main-container">
+
+  <div class="progress-bar-wrap">
+    <span class="progress-label">Progreso del mes</span>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    <span class="progress-num" id="prog-num">0 / 0</span>
+  </div>
+
+  <div class="reader-msg">Vista de cliente — solo lectura. Para editar, usá el modo editor.</div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#d4af37"></div> Instagram</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#185FA5"></div> LinkedIn</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#534AB7"></div> Stories</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#993C1D"></div> YouTube</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0F6E56"></div> Newsletter</div>
+  </div>
+
+  <div id="weeks-root"></div>
+
+  <div class="add-controls">
+    <button class="btn-add" onclick="addWeek()">+ Nueva semana</button>
+    <button class="btn-add secondary" onclick="exportData()">Exportar datos</button>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-marca">VIERNES<span>.</span></div>
+  <div class="footer-by">Preparado por Desde Adentro · Julio 2026</div>
+</div>
+
+<script>
+const DEFAULT_DATA = {
+  weeks: [
+    {
+      id: 'w1',
+      title: 'Semana 1 — "El problema que nadie nombra"',
+      posts: [
+        { id: 'p1', network: 'instagram', type: 'Carrusel', day: 'Lunes', title: 'El Excel dice que estás bien. Pero no te está mostrando todo.', body: 'Hook: El Excel dice que estás bien. Pero no te está mostrando todo.\n\nSlides:\n1. El Excel dice que estás bien. Pero no te está mostrando todo.\n2. Todos los lunes, antes de abrir, revisás los números. Abrís el Excel, el cuaderno, el resumen del banco, los mensajes de WhatsApp con los que te deben. Cruzás todo en la cabeza y llegás a un número. Tu número.\n3. El problema no es que el número esté mal. El problema es el tiempo que te llevó armarlo. Y que la semana que viene tenés que hacerlo de nuevo.\n4. Mientras tanto, hay un cliente al que no llamaste. Una oportunidad que no viste. Una decisión que postergaste.\n5. Eso tiene un nombre. Se llama costo de oportunidad. Y lo estás pagando todos los lunes.\n6. Si esto te pasa todos los lunes, quedáte cerca. Pronto vas a tener la solución. VIERNES.\n\nCaption: Todos los lunes perdés algo que no es plata. No es el número lo que está mal. Es el tiempo que te lleva armarlo. ¿Te reconocés en esto? Quedáte cerca.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #flujodecaja #costodeoportunidad', done: false },
+        { id: 'p2', network: 'linkedin', type: 'Post', day: 'Martes', title: 'La mayoría de las PyMEs tienen un sistema financiero. Está en la cabeza del dueño.', body: 'La mayoría de las PyMEs tienen un sistema financiero. Y está en la cabeza del dueño. No porque sean desorganizados. Sino porque nunca existió una herramienta pensada para ellos. ¿Lo estás viendo en tu empresa o en la de alguien cercano?\n\n#pymes #gestión #finanzas #emprendedores', done: false },
+        { id: 'p3', network: 'instagram', type: 'Placa', day: 'Jueves', title: 'La pregunta más importante de una PyME no es cuánto vendiste. Es si te va a alcanzar la semana que viene.', body: 'Caption: Todos los meses hay una semana que aprieta más que las otras. ¿Sabés cuándo va a ser la tuya?\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #finanzasparapymes #emprendedoresargentinos', done: false },
+        { id: 'p4', network: 'stories', type: 'Encuesta', day: 'Lunes', title: '¿Cuánto tiempo perdés por semana armando tus números?', body: 'Opciones: menos de 1h · 1 a 3h · más de 3h · no los armo', done: false },
+        { id: 'p5', network: 'stories', type: 'Pregunta abierta', day: 'Miércoles', title: '¿Cuál es el momento del mes que más te estresa financieramente?', body: '', done: false },
+        { id: 'p6', network: 'stories', type: 'Frase', day: 'Viernes', title: 'Gestionar una empresa ya es difícil. Los números no deberían serlo más.', body: '', done: false }
+      ]
+    },
+    {
+      id: 'w2',
+      title: 'Semana 2 — "El costo de no saber"',
+      posts: [
+        { id: 'p7', network: 'instagram', type: 'Carrusel', day: 'Lunes', title: 'Todos los lunes perdés algo que no es plata.', body: 'Hook: Todos los lunes perdés algo que no es plata.\n\nCaption: Todos los lunes perdés algo que no es plata. No es el número lo que está mal. Es el tiempo que te lleva armarlo. Y todo lo que dejás de hacer mientras tanto. ¿Te reconocés en esto? Quedáte cerca.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #flujodecaja #costodeoportunidad', done: true },
+        { id: 'p8', network: 'linkedin', type: 'Carrusel PDF', day: 'Martes', title: 'Los 3 números que todo dueño debería conocer', body: 'Slide 1: Los 3 números que todo dueño debería conocer\n\nSlide 2: Muchos dueños saben cuánto vendieron este mes. Algunos saben cuánto ganaron. Pero hay tres números que suelen tener más impacto en las decisiones del negocio.\n\nSlide 3: 1. ¿Cuánto tiempo podrías operar si mañana dejaras de cobrar?\n\nSlide 4: No es una situación real. Es un ejercicio. Pero revela algo importante: ¿Cuánto margen de maniobra tiene tu empresa ante un imprevisto?\n\nSlide 5: 2. ¿Tu negocio genera dinero o lo consume?\n\nSlide 6: No alcanza con saber si entra y sale plata. Lo importante es entender la velocidad. Porque una empresa que consume efectivo rápidamente tiene menos tiempo para reaccionar.\n\nSlide 7: 3. ¿Cuánta plata está quieta? Cuando falta dinero lo vemos enseguida. Cuando sobra, muchas veces pasa desapercibido. Pero el dinero inmovilizado también tiene un costo.\n\nSlide 8: La salud financiera de una empresa no depende solamente de cuánto vende. También depende de cuánto tiempo tiene, cómo usa sus recursos y qué hace con sus excedentes. ¿Conocés estos tres números de tu negocio?\n\nCaption: La mayoría de los dueños conoce sus ventas. Algunos conocen su rentabilidad. Pero muy pocos conocen los indicadores que realmente condicionan sus decisiones.\n¿Cuánto tiempo podrías operar ante un imprevisto?\n¿Tu negocio genera dinero o lo consume?\n¿Cuánta plata está quieta sin generar valor?\nEntender estas tres variables puede cambiar la forma en que gestionás tu empresa.\n\n#PyMEs #Negocios #Empresas #GestiónEmpresarial #FinanzasPyME', done: false },
+        { id: 'p9', network: 'instagram', type: 'Placa', day: 'Jueves', title: 'Tomar una decisión financiera sin información clara no es valentía. Es improvisación.', body: 'Caption: Contratar, invertir, financiarse, aumentar precios. Todas decisiones que se toman todos los días. Casi siempre sin ver lo que viene. ¿Cuándo fue la última vez que decidiste algo grande con total claridad sobre tu caja?\n\n#pymesargentinas #flujodecaja #dueñodenegocio #gestiónpyme #decisiones', done: false },
+        { id: 'p10', network: 'linkedin', type: 'Post actualidad', day: 'Jueves', title: 'La inflación de mayo fue 2,1%. La más baja en 8 meses.', body: 'La inflación de mayo fue 2,1%. La más baja en 8 meses. Buena noticia. Pero también una señal de que algo cambió en las reglas del juego. Cuando los precios se mueven menos, las decisiones pesan más. ¿Lo estás viendo en tu negocio?\n\n#pymesargentinas #gestionpyme #negocios #empresas', done: false },
+        { id: 'p11', network: 'stories', type: 'Encuesta', day: 'Lunes', title: '¿Cuándo tomás una decisión financiera grande, qué hacés?', body: 'Opciones: confío en mi instinto · hago cuentas en el momento · consulto a alguien · lo postergo', done: false },
+        { id: 'p12', network: 'stories', type: 'Frase', day: 'Miércoles', title: 'La diferencia entre reaccionar y anticiparse puede definir el año de tu empresa.', body: '', done: false },
+        { id: 'p13', network: 'stories', type: 'Pregunta abierta', day: 'Viernes', title: '¿Alguna vez tomaste una decisión que después te costó más de lo que pensabas?', body: '', done: false }
+      ]
+    },
+    {
+      id: 'w3',
+      title: 'Semana 3 — "Algo está por cambiar"',
+      posts: [
+        { id: 'p14', network: 'instagram', type: 'Carrusel', day: 'Lunes', title: 'La inflación bajó al 2,1%. ¿Sabés qué cambia en tu negocio?', body: 'Slides:\n1. La inflación bajó al 2,1%. ¿Sabés qué cambia en tu negocio?\n2. La semana pasada el INDEC confirmó: inflación de mayo 2,1%. La más baja en 8 meses.\n3. Buena noticia. Pero también una señal. Cuando los precios se mueven menos, las decisiones pesan más.\n4. Vuelven las preguntas que la inflación tapaba: ¿Cuándo cobro? ¿Cuándo pago? ¿Cuánto estoy ganando realmente?\n5. El contexto cambió. La forma de gestionar también. Quedáte cerca. Algo se viene. VIERNES.\n\nCaption: La inflación de mayo fue 2,1%. La más baja en 8 meses. Cuando los precios se mueven menos, las decisiones pesan más. ¿Lo estás viendo en tu negocio?\n\n#pymesargentinas #gestionpyme #negocios #empresas #emprendedoresargentinos', done: false },
+        { id: 'p15', network: 'linkedin', type: 'Post', day: 'Martes', title: 'Durante años, la proyección financiera fue una herramienta reservada para grandes empresas.', body: 'Durante años, la proyección financiera fue una herramienta reservada para empresas con equipos especializados. Las PyMEs gestionaban como podían. Con planillas, con memoria, con intuición. Eso está por cambiar. Más info pronto.\n\n#pymes #finanzas #tecnología #gestión', done: false },
+        { id: 'p16', network: 'instagram', type: 'Placa', day: 'Jueves', title: '¿Y si pudieras saber hoy cómo va a estar tu caja la semana que viene?', body: 'Caption: No como una intuición. No como una estimación a ojo. Con claridad real. Algo se viene. Quedáte cerca.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #flujodecaja #finanzasparapymes', done: false },
+        { id: 'p17', network: 'stories', type: 'Countdown', day: 'Lunes', title: 'Algo está por llegar', body: '', done: false },
+        { id: 'p18', network: 'stories', type: 'Encuesta', day: 'Miércoles', title: '¿Qué te daría más tranquilidad en tu negocio?', body: 'Opciones: saber cuánto entra este mes · saber cuánto sale · ver las próximas semanas de un vistazo · tener todo en un solo lugar', done: false },
+        { id: 'p19', network: 'stories', type: 'Pregunta abierta', day: 'Viernes', title: 'Si pudieras ver tu caja con 3 semanas de anticipación, ¿qué decisión tomarías diferente?', body: '', done: false }
+      ]
+    },
+    {
+      id: 'w4',
+      title: 'Semana 4 — "VIERNES."',
+      posts: [
+        { id: 'p20', network: 'instagram', type: 'Carrusel presentación', day: 'Lunes', title: 'Presentación oficial VIERNES.', body: 'Slides:\n1. VIERNES.\n2. Saber, sin ser experto ni perder horas, si tu negocio va a estar bien parado las próximas semanas.\n3. Porque gestionar una empresa ya es suficientemente difícil. Las herramientas deberían simplificar ese trabajo, no hacerlo más complejo.\n4. Pronto.\n5. VIERNES. · Tu copiloto financiero · @viernescopilot\n\nCaption: Llevamos semanas hablando del problema. Hoy te presentamos lo que viene. VIERNES. nace para ayudar a dueños de PyMEs a tomar mejores decisiones financieras — con claridad, con anticipación y sin necesidad de ser experto en finanzas. Pronto vas a poder ver tu caja como nunca antes.\n\n#viernes #pymesargentinas #dueñodenegocio #finanzasparapymes #lanzamiento', done: false },
+        { id: 'p21', network: 'linkedin', type: 'Post oficial', day: 'Martes', title: 'Hoy presentamos VIERNES.', body: 'Hoy presentamos VIERNES. Una plataforma de planificación financiera diseñada para pequeñas y medianas empresas. No para mostrar lo que ya pasó. Para ayudar a ver lo que viene. Porque la diferencia entre reaccionar y anticiparse puede definir el crecimiento de una empresa. Más información en los próximos días. soyviernes.com\n\n#viernes #pymes #finanzas #tecnología #lanzamiento #emprendedores', done: false },
+        { id: 'p22', network: 'instagram', type: 'Placa', day: 'Jueves', title: 'Las mejores decisiones financieras no se toman cuando aparece el problema. Se toman antes.', body: 'Caption: Eso es VIERNES. Tu copiloto financiero. Pronto disponible.\n\n#viernes #pymesargentinas #flujodecaja #dueñodenegocio #emprendedoresargentinos', done: false },
+        { id: 'p23', network: 'stories', type: 'Countdown', day: 'Lunes', title: 'Countdown al lanzamiento', body: '', done: false },
+        { id: 'p24', network: 'stories', type: 'CTA', day: 'Miércoles', title: '¿Querés ser de los primeros en usarlo?', body: 'Link directo a soyviernes.com', done: false },
+        { id: 'p25', network: 'stories', type: 'Recap', day: 'Viernes', title: 'Respuestas a las encuestas de las semanas anteriores', body: '', done: false }
+      ]
+    }
+  ]
+};
+
+let data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+let currentMode = 'editor';
+let expandedPosts = new Set();
+
+function loadFromStorage() {
+  try {
+    const saved = localStorage.getItem('viernes-cal-v2');
+    if (saved) data = JSON.parse(saved);
+  } catch(e) {}
+}
+
+function saveToStorage() {
+  try { localStorage.setItem('viernes-cal-v2', JSON.stringify(data)); } catch(e) {}
+}
+
+function uid() { return 'id' + Math.random().toString(36).slice(2,9); }
+
+function setMode(mode) {
+  currentMode = mode;
+  const container = document.getElementById('main-container');
+  container.className = 'container ' + mode + '-mode';
+  document.getElementById('btn-editor').className = 'mode-badge editor' + (mode === 'editor' ? ' active' : '');
+  document.getElementById('btn-reader').className = 'mode-badge reader' + (mode === 'reader' ? ' active' : '');
+  document.getElementById('mode-hint').textContent = mode === 'editor' ? 'Podés tildar, editar y borrar' : 'Vista del cliente — solo lectura';
+  render();
+}
+
+function countProgress() {
+  let total = 0, done = 0;
+  data.weeks.forEach(w => w.posts.forEach(p => { total++; if (p.done) done++; }));
+  return { total, done };
+}
+
+function updateProgress() {
+  const { total, done } = countProgress();
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-num').textContent = done + ' / ' + total + ' publicados';
+  document.getElementById('header-prog').textContent = pct + '% del mes completado';
+}
+
+function togglePost(wid, pid) {
+  if (currentMode !== 'editor') return;
+  const w = data.weeks.find(x => x.id === wid);
+  const p = w.posts.find(x => x.id === pid);
+  p.done = !p.done;
+  saveToStorage();
+  render();
+}
+
+function toggleBody(pid) {
+  if (expandedPosts.has(pid)) expandedPosts.delete(pid);
+  else expandedPosts.add(pid);
+  render();
+}
+
+function deletePost(wid, pid) {
+  const w = data.weeks.find(x => x.id === wid);
+  w.posts = w.posts.filter(p => p.id !== pid);
+  saveToStorage();
+  render();
+}
+
+function deleteWeek(wid) {
+  if (!confirm('¿Eliminar esta semana y todos sus posteos?')) return;
+  data.weeks = data.weeks.filter(w => w.id !== wid);
+  saveToStorage();
+  render();
+}
+
+function addWeek() {
+  data.weeks.push({ id: uid(), title: 'Nueva semana', posts: [] });
+  saveToStorage();
+  render();
+}
+
+function exportData() {
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'viernes-calendario-julio2026.json';
+  a.click();
+}
+
+window.togglePost = togglePost;
+window.toggleBody = toggleBody;
+window.deletePost = deletePost;
+window.deleteWeek = deleteWeek;
+window.addWeek = addWeek;
+window.exportData = exportData;
+
+function render() {
+  updateProgress();
+  const root = document.getElementById('weeks-root');
+  root.innerHTML = '';
+
+  data.weeks.forEach(week => {
+    const doneCount = week.posts.filter(p => p.done).length;
+
+    const weekEl = document.createElement('div');
+    weekEl.className = 'week';
+
+    const header = document.createElement('div');
+    header.className = 'week-header';
+    header.innerHTML =
+      '<div style="display:flex; align-items:center; gap:12px; flex:1;">' +
+        '<span class="week-title">' + week.title + '</span>' +
+        '<span class="week-count">' + doneCount + '/' + week.posts.length + '</span>' +
+      '</div>' +
+      (currentMode === 'editor' ? '<button onclick="deleteWeek(\'' + week.id + '\')" style="background:none;border:none;color:#b0aba2;cursor:pointer;font-size:18px;padding:4px 8px;" title="Eliminar semana">×</button>' : '');
+    weekEl.appendChild(header);
+
+    const grid = document.createElement('div');
+    grid.className = 'posts-grid';
+
+    week.posts.forEach(post => {
+      const expanded = expandedPosts.has(post.id);
+      const card = document.createElement('div');
+      card.className = 'post-card' + (post.done ? ' done' : '');
+
+      card.innerHTML =
+        '<div class="card-top">' +
+          '<div class="card-tags">' +
+            '<span class="tag-network ' + post.network + '">' + post.network.charAt(0).toUpperCase() + post.network.slice(1) + '</span>' +
+            '<span class="tag-day">' + (post.day || '') + '</span>' +
+            '<span class="tag-type">' + post.type + '</span>' +
+          '</div>' +
+          '<input type="checkbox" class="card-checkbox' + (currentMode !== 'editor' ? ' readonly' : '') + '" ' + (post.done ? 'checked' : '') + ' onchange="togglePost(\'' + week.id + '\',\'' + post.id + '\')" />' +
+        '</div>' +
+        '<div class="card-published-badge">✓ Publicado</div>' +
+        '<div class="card-title">' + post.title + '</div>' +
+        (post.body ? '<button class="card-toggle-body" onclick="toggleBody(\'' + post.id + '\')">' + (expanded ? '↑ Ocultar copy' : '↓ Ver copy completo') + '</button>' : '') +
+        (post.body && expanded ? '<div class="card-body visible">' + post.body + '</div>' : '<div class="card-body"></div>') +
+        (currentMode === 'editor' ? '<div class="editor-controls"><button class="btn-delete" onclick="deletePost(\'' + week.id + '\',\'' + post.id + '\')">Eliminar</button></div>' : '');
+
+      grid.appendChild(card);
+    });
+
+    weekEl.appendChild(grid);
+    root.appendChild(weekEl);
+  });
+}
+
+loadFromStorage();
+setMode('editor');
+</script>
+</body>
+</html>
