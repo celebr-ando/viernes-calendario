@@ -255,6 +255,26 @@
     text-decoration: underline;
     text-underline-offset: 2px;
   }
+  .card-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .card-copy-btn {
+    font-size: 12px;
+    color: var(--azul);
+    font-weight: 600;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-copy-btn:hover { color: #2a3540; }
+  .card-copy-btn.copied { color: #0F6E56; }
+  .card-body { user-select: text; -webkit-user-select: text; }
   .card-body {
     margin-top: 10px;
     padding: 12px;
@@ -531,6 +551,44 @@ function toggleBody(pid) {
   render();
 }
 
+function findPost(pid) {
+  for (const w of data.weeks) {
+    const p = w.posts.find(x => x.id === pid);
+    if (p) return p;
+  }
+  return null;
+}
+
+function copyBody(pid, btn) {
+  const post = findPost(pid);
+  if (!post) return;
+  const text = post.body || post.title;
+  const done = () => {
+    if (!btn) return;
+    const original = btn.dataset.label;
+    btn.textContent = '✓ ¡Copiado!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  } else {
+    fallbackCopy(text, done);
+  }
+}
+
+function fallbackCopy(text, done) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try { document.execCommand('copy'); done(); } catch(e) {}
+  document.body.removeChild(ta);
+}
+
 function deletePost(wid, pid) {
   const w = data.weeks.find(x => x.id === wid);
   w.posts = w.posts.filter(p => p.id !== pid);
@@ -607,7 +665,10 @@ function render() {
         '</div>' +
         '<div class="card-published-badge">✓ Publicado</div>' +
         '<div class="card-title">' + post.title + '</div>' +
-        (post.body ? '<button class="card-toggle-body" onclick="toggleBody(\'' + post.id + '\')">' + (expanded ? '↑ Ocultar copy' : '↓ Ver copy completo') + '</button>' : '') +
+        '<div class="card-actions-row">' +
+          (post.body ? '<button class="card-toggle-body" onclick="toggleBody(\'' + post.id + '\')">' + (expanded ? '↑ Ocultar copy' : '↓ Ver copy completo') + '</button>' : '') +
+          '<button class="card-copy-btn" data-label="📋 Copiar copy" onclick="copyBody(\'' + post.id + '\', this)">📋 Copiar copy</button>' +
+        '</div>' +
         (post.body && expanded ? '<div class="card-body visible">' + post.body + '</div>' : '<div class="card-body"></div>') +
         (currentMode === 'editor' ? '<div class="editor-controls"><button class="btn-delete" onclick="deletePost(\'' + week.id + '\',\'' + post.id + '\')">Eliminar</button></div>' : '');
 
