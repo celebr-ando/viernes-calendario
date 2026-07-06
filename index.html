@@ -506,7 +506,13 @@ let expandedPosts = new Set();
 function loadFromStorage() {
   try {
     const saved = localStorage.getItem('viernes-cal-v2');
-    if (saved) data = JSON.parse(saved);
+    if (!saved) return;
+    const savedData = JSON.parse(saved);
+    const doneMap = {};
+    (savedData.weeks || []).forEach(w => w.posts.forEach(p => { doneMap[p.id] = p.done; }));
+    data.weeks.forEach(w => w.posts.forEach(p => {
+      if (Object.prototype.hasOwnProperty.call(doneMap, p.id)) p.done = doneMap[p.id];
+    }));
   } catch(e) {}
 }
 
