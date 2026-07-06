@@ -367,6 +367,80 @@
   .footer-marca span { color: var(--amarillo); }
   .footer-by { font-size: 11px; color: var(--salvia); }
 
+  /* VIEW TABS */
+  .view-tabs { display: flex; gap: 8px; margin-bottom: 28px; }
+  .tab-btn {
+    padding: 9px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--borde);
+    background: var(--blanco);
+    color: var(--grafito);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab-btn:hover { border-color: #c8c4bc; }
+  .tab-btn.active { background: var(--azul); color: var(--blanco); border-color: var(--azul); }
+
+  /* SLOGANS */
+  .slogan-category { margin-bottom: 32px; }
+  .slogan-category-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--azul);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--dorado);
+  }
+  .slogan-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+  .slogan-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--blanco);
+    border: 0.5px solid var(--borde);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .slogan-checkbox { width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; accent-color: var(--azul); }
+  .slogan-text { flex: 1; font-size: 13px; color: var(--texto); line-height: 1.4; }
+  .slogan-item.checked .slogan-text { text-decoration: line-through; color: var(--texto-muted); }
+  .slogan-delete {
+    background: none;
+    border: none;
+    color: #b0aba2;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    flex-shrink: 0;
+  }
+  .slogan-delete:hover { color: #c0392b; }
+  .slogan-add-row { display: flex; gap: 8px; }
+  .slogan-add-input {
+    flex: 1;
+    padding: 9px 12px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--texto);
+  }
+  .slogan-add-input:focus { outline: none; border-color: var(--azul); }
+  .slogan-add-btn {
+    padding: 9px 16px;
+    background: var(--azul);
+    color: var(--blanco);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .slogan-add-btn:hover { background: #2a3540; }
+
   /* READER OVERLAY MSG */
   .reader-msg {
     display: none;
@@ -410,27 +484,40 @@
 
 <div class="container" id="main-container">
 
-  <div class="progress-bar-wrap">
-    <span class="progress-label">Progreso del mes</span>
-    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
-    <span class="progress-num" id="prog-num">0 / 0</span>
+  <div class="view-tabs">
+    <button class="tab-btn active" id="tab-calendario" onclick="setView('calendario')">🗓️ Calendario</button>
+    <button class="tab-btn" id="tab-slogans" onclick="setView('slogans')">💬 Slogans</button>
   </div>
 
-  <div class="reader-msg">Vista de cliente — solo lectura. Para editar, usá el modo editor.</div>
+  <div id="calendario-view">
 
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#d4af37"></div> Instagram</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#185FA5"></div> LinkedIn</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#534AB7"></div> Stories</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#993C1D"></div> YouTube</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#0F6E56"></div> Newsletter</div>
+    <div class="progress-bar-wrap">
+      <span class="progress-label">Progreso del mes</span>
+      <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      <span class="progress-num" id="prog-num">0 / 0</span>
+    </div>
+
+    <div class="reader-msg">Vista de cliente — solo lectura. Para editar, usá el modo editor.</div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#d4af37"></div> Instagram</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#185FA5"></div> LinkedIn</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#534AB7"></div> Stories</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#993C1D"></div> YouTube</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#0F6E56"></div> Newsletter</div>
+    </div>
+
+    <div id="weeks-root"></div>
+
+    <div class="add-controls">
+      <button class="btn-add" onclick="addWeek()">+ Nueva semana</button>
+      <button class="btn-add secondary" onclick="exportData()">Exportar datos</button>
+    </div>
+
   </div>
 
-  <div id="weeks-root"></div>
-
-  <div class="add-controls">
-    <button class="btn-add" onclick="addWeek()">+ Nueva semana</button>
-    <button class="btn-add secondary" onclick="exportData()">Exportar datos</button>
+  <div id="slogans-view" style="display:none;">
+    <div id="slogans-root"></div>
   </div>
 
 </div>
@@ -510,6 +597,154 @@ const DEFAULT_DATA = {
     }
   ]
 };
+
+const DEFAULT_SLOGANS = [
+  { id: 'cat-anticipacion', name: 'Sobre anticipación', items: [
+    { id: 'sg1', text: 'Sabé cómo va a estar tu caja, antes de que pase.', checked: false },
+    { id: 'sg2', text: 'Dejá de reaccionar. Empezá a anticipar.', checked: false },
+    { id: 'sg3', text: 'Lo que se viene, ahora lo ves venir.', checked: false },
+    { id: 'sg4', text: 'Anticipá tu caja. Decidí con tiempo.', checked: false }
+  ]},
+  { id: 'cat-claridad', name: 'Sobre claridad', items: [
+    { id: 'sg5', text: 'La claridad que tu negocio necesita.', checked: false },
+    { id: 'sg6', text: 'Tus números claros, sin ser experto.', checked: false },
+    { id: 'sg7', text: 'Entendé tu negocio de un vistazo.', checked: false },
+    { id: 'sg8', text: 'Menos planillas. Más claridad.', checked: false }
+  ]},
+  { id: 'cat-decisiones', name: 'Sobre decisiones', items: [
+    { id: 'sg9', text: 'Las mejores decisiones se toman antes.', checked: false },
+    { id: 'sg10', text: 'Decidí con información, no con intuición.', checked: false },
+    { id: 'sg11', text: 'Dejá de adivinar. Empezá a decidir.', checked: false }
+  ]},
+  { id: 'cat-tranquilidad', name: 'Sobre tranquilidad', items: [
+    { id: 'sg12', text: 'La tranquilidad de saber que llegás.', checked: false },
+    { id: 'sg13', text: 'Dormí tranquilo. Tu caja está bajo control.', checked: false },
+    { id: 'sg14', text: 'Manejá tu negocio sin sobresaltos.', checked: false }
+  ]},
+  { id: 'cat-directos', name: 'Directos / con gancho', items: [
+    { id: 'sg15', text: '¿Te va a alcanzar la plata? Ahora lo sabés.', checked: false },
+    { id: 'sg16', text: 'Tu negocio, sin sorpresas.', checked: false },
+    { id: 'sg17', text: 'El fin de gestionar a ciegas.', checked: false }
+  ]}
+];
+
+let slogans = JSON.parse(JSON.stringify(DEFAULT_SLOGANS));
+let slogansDeletedIds = new Set();
+
+function loadSlogansFromStorage() {
+  try {
+    const saved = localStorage.getItem('viernes-slogans-v1');
+    if (!saved) return;
+    const savedObj = JSON.parse(saved);
+    slogansDeletedIds = new Set(savedObj.deletedIds || []);
+    const checkedMap = {};
+    (savedObj.categories || []).forEach(c => (c.items || []).forEach(it => { checkedMap[it.id] = it.checked; }));
+
+    slogans.forEach(cat => {
+      cat.items = cat.items.filter(it => !slogansDeletedIds.has(it.id));
+      cat.items.forEach(it => {
+        if (Object.prototype.hasOwnProperty.call(checkedMap, it.id)) it.checked = checkedMap[it.id];
+      });
+    });
+
+    (savedObj.categories || []).forEach(savedCat => {
+      const targetCat = slogans.find(c => c.id === savedCat.id);
+      if (!targetCat) return;
+      (savedCat.items || []).forEach(it => {
+        if (it.id && it.id.indexOf('custom-') === 0 && !slogansDeletedIds.has(it.id)) {
+          targetCat.items.push(it);
+        }
+      });
+    });
+  } catch(e) {}
+}
+
+function saveSlogansToStorage() {
+  try {
+    localStorage.setItem('viernes-slogans-v1', JSON.stringify({
+      categories: slogans,
+      deletedIds: Array.from(slogansDeletedIds)
+    }));
+  } catch(e) {}
+}
+
+function toggleSlogan(catId, itemId) {
+  const cat = slogans.find(c => c.id === catId);
+  const item = cat.items.find(i => i.id === itemId);
+  item.checked = !item.checked;
+  saveSlogansToStorage();
+  renderSlogans();
+}
+
+function addSloganFromInput(catId) {
+  const input = document.getElementById('slogan-input-' + catId);
+  const text = input.value.trim();
+  if (!text) return;
+  const cat = slogans.find(c => c.id === catId);
+  cat.items.push({ id: 'custom-' + uid(), text: text, checked: false });
+  input.value = '';
+  saveSlogansToStorage();
+  renderSlogans();
+}
+
+function deleteSlogan(catId, itemId) {
+  const cat = slogans.find(c => c.id === catId);
+  cat.items = cat.items.filter(i => i.id !== itemId);
+  if (itemId.indexOf('custom-') !== 0) slogansDeletedIds.add(itemId);
+  saveSlogansToStorage();
+  renderSlogans();
+}
+
+window.toggleSlogan = toggleSlogan;
+window.addSloganFromInput = addSloganFromInput;
+window.deleteSlogan = deleteSlogan;
+
+function renderSlogans() {
+  const root = document.getElementById('slogans-root');
+  root.innerHTML = '';
+
+  slogans.forEach(cat => {
+    const catEl = document.createElement('div');
+    catEl.className = 'slogan-category';
+
+    const title = document.createElement('div');
+    title.className = 'slogan-category-title';
+    title.textContent = cat.name;
+    catEl.appendChild(title);
+
+    const list = document.createElement('div');
+    list.className = 'slogan-list';
+    cat.items.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'slogan-item' + (item.checked ? ' checked' : '');
+      row.innerHTML =
+        '<input type="checkbox" class="slogan-checkbox" ' + (item.checked ? 'checked' : '') + ' onchange="toggleSlogan(\'' + cat.id + '\',\'' + item.id + '\')" />' +
+        '<span class="slogan-text"></span>' +
+        '<button class="slogan-delete" onclick="deleteSlogan(\'' + cat.id + '\',\'' + item.id + '\')" title="Eliminar">×</button>';
+      row.querySelector('.slogan-text').textContent = item.text;
+      list.appendChild(row);
+    });
+    catEl.appendChild(list);
+
+    const addRow = document.createElement('div');
+    addRow.className = 'slogan-add-row';
+    addRow.innerHTML =
+      '<input type="text" class="slogan-add-input" id="slogan-input-' + cat.id + '" placeholder="Agregar otro slogan..." onkeydown="if(event.key===\'Enter\') addSloganFromInput(\'' + cat.id + '\')" />' +
+      '<button class="slogan-add-btn" onclick="addSloganFromInput(\'' + cat.id + '\')">+ Agregar</button>';
+    catEl.appendChild(addRow);
+
+    root.appendChild(catEl);
+  });
+}
+
+function setView(view) {
+  document.getElementById('calendario-view').style.display = view === 'calendario' ? '' : 'none';
+  document.getElementById('slogans-view').style.display = view === 'slogans' ? '' : 'none';
+  document.getElementById('tab-calendario').classList.toggle('active', view === 'calendario');
+  document.getElementById('tab-slogans').classList.toggle('active', view === 'slogans');
+  if (view === 'slogans') renderSlogans();
+}
+window.setView = setView;
 
 let data = JSON.parse(JSON.stringify(DEFAULT_DATA));
 let currentMode = 'editor';
@@ -703,6 +938,7 @@ function render() {
 }
 
 loadFromStorage();
+loadSlogansFromStorage();
 setMode('editor');
 </script>
 </body>
