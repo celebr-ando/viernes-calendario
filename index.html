@@ -384,6 +384,65 @@
   .tab-btn:hover { border-color: #c8c4bc; }
   .tab-btn.active { background: var(--azul); color: var(--blanco); border-color: var(--azul); }
 
+  /* MONTH TABS */
+  .month-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+  .month-tab-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--borde);
+    background: var(--blanco);
+    color: var(--grafito);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .month-tab-btn:hover { border-color: #c8c4bc; }
+  .month-tab-btn.active { background: var(--dorado); color: var(--azul); border-color: var(--dorado); }
+
+  /* CAPACIDADES BOX */
+  .capacidades-box {
+    background: var(--blanco);
+    border: 0.5px solid var(--borde);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+  }
+  .capacidades-title { font-size: 13px; font-weight: 700; color: var(--azul); margin-bottom: 10px; }
+  .capacidades-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; }
+  .capacidad-item { font-size: 12px; color: var(--grafito); }
+  .capacidad-item strong { color: var(--texto); }
+
+  /* AD MATERIAL */
+  .ad-material-section { margin-top: 40px; }
+  .ad-material-header {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--azul);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--dorado);
+  }
+  .ad-card {
+    background: var(--blanco);
+    border-radius: 12px;
+    border: 0.5px solid var(--borde);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .ad-card-title { font-size: 13px; font-weight: 700; color: var(--texto); margin-bottom: 8px; }
+  .ad-card-body {
+    font-size: 12px;
+    color: var(--grafito);
+    white-space: pre-wrap;
+    line-height: 1.7;
+    margin-top: 10px;
+    padding: 12px;
+    background: var(--crema);
+    border-radius: 8px;
+  }
+
   /* SLOGANS */
   .slogan-category { margin-bottom: 32px; }
   .slogan-category-title {
@@ -471,7 +530,7 @@
     <div class="subtitulo">Calendario de contenido · Desde Adentro</div>
   </div>
   <div class="header-right">
-    <div class="mes">Julio 2026</div>
+    <div class="mes" id="header-mes">Julio 2026</div>
     <div class="prog" id="header-prog">Cargando...</div>
   </div>
 </div>
@@ -491,6 +550,23 @@
 
   <div id="calendario-view">
 
+    <div class="month-tabs">
+      <button class="month-tab-btn active" id="month-tab-julio" onclick="setMonth('julio')">Julio 2026</button>
+      <button class="month-tab-btn" id="month-tab-agosto" onclick="setMonth('agosto')">Agosto 2026</button>
+    </div>
+
+    <div id="capacidades-box" class="capacidades-box" style="display:none;">
+      <div class="capacidades-title">Las 6 capacidades (lenguaje de marca)</div>
+      <div class="capacidades-grid">
+        <div class="capacidad-item">💰 <strong>Visualizá tu caja</strong> — Flujo de caja</div>
+        <div class="capacidad-item">📈 <strong>Anticipá lo que viene</strong> — Proyecciones</div>
+        <div class="capacidad-item">🚨 <strong>Enterate antes</strong> — Alertas de vencimientos</div>
+        <div class="capacidad-item">📊 <strong>Entendé tu negocio</strong> — Indicadores clave</div>
+        <div class="capacidad-item">📅 <strong>No te olvides de nada</strong> — Vencimientos</div>
+        <div class="capacidad-item">🤖 <strong>Consultá cuando quieras</strong> — Bocha, tu asistente</div>
+      </div>
+    </div>
+
     <div class="progress-bar-wrap">
       <span class="progress-label">Progreso del mes</span>
       <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
@@ -508,6 +584,8 @@
     </div>
 
     <div id="weeks-root"></div>
+
+    <div id="ad-material-root"></div>
 
     <div class="add-controls">
       <button class="btn-add" onclick="addWeek()">+ Nueva semana</button>
@@ -529,7 +607,7 @@
 
 <script>
 const DEFAULT_DATA = {
-  weeks: [
+  julio: { label: 'Julio 2026', weeks: [
     {
       id: 'w1',
       title: 'Semana 1 — "El problema que nadie nombra"',
@@ -549,7 +627,7 @@ const DEFAULT_DATA = {
         { id: 'p7', network: 'instagram', type: 'Carrusel', day: 'Lunes', title: 'Todos los lunes perdés algo que no es plata.', body: 'Hook: Todos los lunes perdés algo que no es plata.\n\nCaption: Todos los lunes perdés algo que no es plata. No es el número lo que está mal. Es el tiempo que te lleva armarlo. Y todo lo que dejás de hacer mientras tanto. ¿Te reconocés en esto? Quedáte cerca.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #flujodecaja #costodeoportunidad', done: true },
         { id: 'p8', network: 'linkedin', type: 'Carrusel PDF', day: 'Martes', title: 'Los 3 números que todo dueño debería conocer', body: 'Slide 1: Los 3 números que todo dueño debería conocer\n\nSlide 2: Muchos dueños saben cuánto vendieron este mes. Algunos saben cuánto ganaron. Pero hay tres números que suelen tener más impacto en las decisiones del negocio.\n\nSlide 3: 1. ¿Cuánto tiempo podrías operar si mañana dejaras de cobrar?\n\nSlide 4: No es una situación real. Es un ejercicio. Pero revela algo importante: ¿Cuánto margen de maniobra tiene tu empresa ante un imprevisto?\n\nSlide 5: 2. ¿Tu negocio genera dinero o lo consume?\n\nSlide 6: No alcanza con saber si entra y sale plata. Lo importante es entender la velocidad. Porque una empresa que consume efectivo rápidamente tiene menos tiempo para reaccionar.\n\nSlide 7: 3. ¿Cuánta plata está quieta? Cuando falta dinero lo vemos enseguida. Cuando sobra, muchas veces pasa desapercibido. Pero el dinero inmovilizado también tiene un costo.\n\nSlide 8: La salud financiera de una empresa no depende solamente de cuánto vende. También depende de cuánto tiempo tiene, cómo usa sus recursos y qué hace con sus excedentes. ¿Conocés estos tres números de tu negocio?\n\nCaption: La mayoría de los dueños conoce sus ventas. Algunos conocen su rentabilidad. Pero muy pocos conocen los indicadores que realmente condicionan sus decisiones.\n¿Cuánto tiempo podrías operar ante un imprevisto?\n¿Tu negocio genera dinero o lo consume?\n¿Cuánta plata está quieta sin generar valor?\nEntender estas tres variables puede cambiar la forma en que gestionás tu empresa.\n\n#PyMEs #Negocios #Empresas #GestiónEmpresarial #FinanzasPyME', done: false },
         { id: 'p9', network: 'instagram', type: 'Placa', day: 'Jueves', title: 'Tomar una decisión financiera sin información clara no es valentía. Es improvisación.', body: 'Caption: Contratar, invertir, financiarse, aumentar precios. Todas decisiones que se toman todos los días. Casi siempre sin ver lo que viene. ¿Cuándo fue la última vez que decidiste algo grande con total claridad sobre tu caja?\n\n#pymesargentinas #flujodecaja #dueñodenegocio #gestiónpyme #decisiones', done: false },
-        { id: 'p10', network: 'linkedin', type: 'Post actualidad', day: 'Jueves', title: 'La inflación de mayo fue 2,1%. La más baja en 8 meses.', body: 'La inflación de mayo fue 2,1%. La más baja en 8 meses. Buena noticia. Pero también una señal de que algo cambió en las reglas del juego. Cuando los precios se mueven menos, las decisiones pesan más. ¿Lo estás viendo en tu negocio?\n\n#pymesargentinas #gestionpyme #negocios #empresas', done: false },
+        { id: 'p_act1', network: 'linkedin', type: 'Carrusel PDF', day: 'Jueves 10/07', par: false, title: 'La brecha real entre una pyme y una multinacional casi nunca es la que pensás.', body: 'Slides:\n1. Se habla mucho de la brecha entre una pyme y una multinacional. Casi nunca es la que pensás.\n2. Una multinacional proyecta su caja a semanas o meses. Tiene un área entera dedicada a eso.\n3. Una pyme la proyecta con memoria, un cuaderno, o una planilla que actualiza cuando se acuerda.\n4. No es que al dueño le falte visión financiera. Es que nunca tuvo el equipo para construirla.\n5. Esa es la brecha que la tecnología puede cerrar de verdad.\n\nCaption: Se habla mucho de la brecha entre una pyme y una multinacional en términos de talento o de esfuerzo. La brecha real casi nunca es esa. Una multinacional proyecta su caja a semanas o meses porque tiene un área entera dedicada a eso. Una pyme argentina, en la enorme mayoría de los casos, la proyecta con memoria, un cuaderno o una planilla que actualiza cuando se acuerda. No es que al dueño de una pyme le falte visión financiera. Es que nunca tuvo el equipo para construirla. Ese es el tipo de brecha que la tecnología puede cerrar de verdad — no reemplazando el criterio de quien conduce el negocio, sino dándole la misma anticipación que hoy solo tienen los que pueden pagar un área de finanzas.\n\n#pymes #finanzas #gestión #emprendedores', done: false },
         { id: 'p11', network: 'stories', type: 'Encuesta', day: 'Lunes', title: '¿Cuándo tomás una decisión financiera grande, qué hacés?', body: 'Opciones: confío en mi instinto · hago cuentas en el momento · consulto a alguien · lo postergo', done: false },
         { id: 'p12', network: 'stories', type: 'Frase', day: 'Miércoles', title: 'La diferencia entre reaccionar y anticiparse puede definir el año de tu empresa.', body: '', done: false },
         { id: 'p13', network: 'stories', type: 'Pregunta abierta', day: 'Viernes', title: '¿Alguna vez tomaste una decisión que después te costó más de lo que pensabas?', body: '', done: false }
@@ -564,7 +642,10 @@ const DEFAULT_DATA = {
         { id: 'p16', network: 'instagram', type: 'Placa', day: 'Jueves', title: '¿Y si pudieras saber hoy cómo va a estar tu caja la semana que viene?', body: 'Caption: No como una intuición. No como una estimación a ojo. Con claridad real. Algo se viene. Quedáte cerca.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #flujodecaja #finanzasparapymes', done: false },
         { id: 'p17', network: 'stories', type: 'Countdown', day: 'Lunes', title: 'Algo está por llegar', body: '', done: false },
         { id: 'p18', network: 'stories', type: 'Encuesta', day: 'Miércoles', title: '¿Qué te daría más tranquilidad en tu negocio?', body: 'Opciones: saber cuánto entra este mes · saber cuánto sale · ver las próximas semanas de un vistazo · tener todo en un solo lugar', done: false },
-        { id: 'p19', network: 'stories', type: 'Pregunta abierta', day: 'Viernes', title: 'Si pudieras ver tu caja con 3 semanas de anticipación, ¿qué decisión tomarías diferente?', body: '', done: false }
+        { id: 'p19', network: 'stories', type: 'Pregunta abierta', day: 'Viernes', title: 'Si pudieras ver tu caja con 3 semanas de anticipación, ¿qué decisión tomarías diferente?', body: '', done: false },
+        { id: 'p_act2', network: 'linkedin', type: 'Carrusel PDF', day: 'Martes 15/07', par: false, title: 'La diferencia entre financiarse para sobrevivir y para crecer casi nunca está en la tasa.', body: 'Slides:\n1. Bajaron las tasas de financiamiento pyme. Buena noticia, en principio.\n2. La mayoría no toma ese crédito para crecer. Lo toma para sostener el día a día.\n3. La morosidad en créditos pyme es varias veces más alta que en las grandes. No es falta de voluntad de pago. Es falta de previsibilidad.\n4. Cuando no sabés qué vas a cobrar la semana que viene, salís a buscar plata cuando el bache ya apareció.\n5. Cuando lo ves venir, planificás en lugar de apagar incendios.\n6. La diferencia casi nunca está en la tasa. Está en si lo viste venir a tiempo.\n\nCaption: Bajaron las tasas de financiamiento pyme. Buena noticia, en principio. El detalle que importa más que la tasa: la mayoría de las empresas no está tomando ese crédito para crecer. Lo está tomando para sostener el día a día. Y hay un número que lo confirma desde otro ángulo — la morosidad en créditos pyme se mantiene en niveles varias veces más altos que en las grandes empresas. No es un problema de voluntad de pago. Es un problema de previsibilidad. Cuando no sabés con certeza qué vas a cobrar la semana que viene, salís a buscar dinero para tapar el bache cuando ya apareció. Cuando lo ves venir con anticipación, la decisión es otra: podés planificar en lugar de salir a apagar incendios. La diferencia entre financiarse para sobrevivir y financiarse para crecer casi nunca está en la tasa. Está en si lo viste venir a tiempo.\n\n#pymes #finanzas #gestión #emprendedores', done: false },
+        { id: 'p_act3', network: 'linkedin', type: 'Carrusel PDF', day: 'Jueves 17/07', par: true, title: 'Lo que facturás no es lo que cobrás. Y esa diferencia lo cambia todo.', body: 'Slides:\n1. 7 de cada 10 pymes sufrieron que un cliente les estirara el plazo de pago. Casi 3 de cada 10 terminaron con cuentas incobrables.\n2. No es un número de balance. Es pagar los sueldos el 30 tranquilo o con la calculadora en la mano.\n3. El problema casi nunca es la facturación. Es que "lo que facturás" y "lo que va a entrar" son dos cosas distintas.\n4. Lo confirmado: lo que ya sabés que entra.\n5. Lo pendiente: lo que te deben pero no cobraste.\n6. Lo estimado: lo que esperás, pero no es seguro.\n7. Separar esas tres cosas es la base para decidir con los pies en la tierra.\n\nCaption: 7 de cada 10 pymes sufrieron que un cliente les estirara unilateralmente el plazo de pago. Casi 3 de cada 10 terminaron con cuentas directamente incobrables. Para una pyme, esto no es un número de balance. Es la diferencia entre pagar los sueldos el 30 con tranquilidad o con la calculadora en la mano. El problema de fondo casi nunca es la facturación. Es que "lo que factura" y "lo que efectivamente va a entrar en la cuenta" son dos cosas distintas. Separar lo que ya está confirmado, lo que está pendiente de cobro y lo que todavía es una estimación no es un lujo de empresa grande. Es la base para tomar decisiones con los pies en la tierra.\n\n#pymes #finanzas #gestión #emprendedores', done: false },
+        { id: 'p_act3ig', network: 'instagram', type: 'Carrusel', day: 'Viernes 18/07', par: true, title: 'Lo que facturás no es lo que cobrás.', body: 'Slides:\n1. Lo que facturás no es lo que cobrás. Y esa diferencia te puede complicar el mes.\n2. 7 de cada 10 pymes tuvieron un cliente que les estiró el plazo de pago. 3 de cada 10 terminaron con plata que nunca cobraron.\n3. No es un número de balance. Es llegar al 30 tranquilo o con la calculadora en la mano.\n4. La clave: separar tu plata en tres.\n5. Lo confirmado: lo que ya sabés que entra.\n6. Lo pendiente: lo que te deben pero no cobraste.\n7. Lo estimado: lo que esperás, pero no es seguro.\n8. Cuando ves esas tres cosas separadas, decidís con los pies en la tierra. VIERNES.\n\nCaption: Facturaste un montón este mes. Pero, ¿cuánto de eso ya está en tu cuenta? 7 de cada 10 pymes tuvieron un cliente que les estiró el plazo de pago. El secreto está en separar tu plata en tres: lo confirmado, lo pendiente y lo estimado. Así sabés con qué contás de verdad.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #flujodecaja #finanzasparapymes', done: false }
       ]
     },
     {
@@ -595,7 +676,69 @@ const DEFAULT_DATA = {
         { id: 'p25', network: 'stories', type: 'Recap', day: 'Viernes', title: 'Respuestas a las encuestas de las semanas anteriores', body: '', done: false }
       ]
     }
-  ]
+  ]},
+  agosto: { label: 'Agosto 2026', weeks: [
+    {
+      id: 'w6',
+      title: 'Semana 1 (1 al 8 de agosto) — "Las capacidades"',
+      posts: [
+        { id: 'p36', network: 'linkedin', type: 'Post', day: 'Lunes 04/08', title: 'La mayoría de los dueños mira el saldo del banco y cree que eso es su caja.', body: 'La mayoría de los dueños mira el saldo del banco y cree que eso es su caja.\nPero el saldo de hoy no te dice si vas a llegar a fin de mes.\nTu caja no es un número. Es una película. Y necesitás verla completa.\nEsta semana te mostramos cómo.\n\n#pymes #finanzas #gestión #emprendedores', done: false },
+        { id: 'p37', network: 'instagram', type: 'Carrusel', day: 'Lunes 04/08', title: 'Mirás el saldo del banco y creés que esa es tu caja.', body: 'Slides:\n1. Mirás el saldo del banco y creés que esa es tu caja.\n2. Pero el saldo de hoy no te dice si vas a llegar a fin de mes.\n3. Tu caja no es un número. Es una película.\n4. Lo que entró, lo que va a entrar, lo que tenés que pagar. Todo junto.\n5. Con VIERNES la ves completa, de un vistazo.\n6. Visualizá tu caja. Así de simple.\n\nCaption: El saldo del banco es una foto. Tu caja es una película. VIERNES te la muestra completa.\n\n#pymesargentinas #dueñodenegocio #flujodecaja #gestiónpyme #finanzasparapymes', done: false },
+        { id: 'p38', network: 'instagram', type: 'Placa', day: 'Jueves 07/08', title: '¿Y si supieras hoy lo que va a pasar con tu plata en 3 semanas?', body: 'Caption: No es adivinar. Es proyectar. VIERNES analiza lo que entra y sale, y te muestra cómo va a estar tu caja las próximas semanas. Anticipá lo que viene.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #finanzasparapymes #proyecciones', done: false },
+        { id: 'p39', network: 'stories', type: 'Encuesta', day: 'Lunes', title: '¿Sabés cómo va a estar tu caja en 2 semanas?', body: 'Opciones: Sí / Más o menos / Ni idea', done: false },
+        { id: 'p40', network: 'stories', type: 'Pregunta abierta', day: 'Miércoles', title: '¿Alguna vez te agarró un pago que no tenías en el radar?', body: '', done: false },
+        { id: 'p41', network: 'stories', type: 'Frase', day: 'Viernes', title: 'El saldo de hoy no te dice si vas a llegar a fin de mes.', body: '', done: false }
+      ]
+    },
+    {
+      id: 'w7',
+      title: 'Semana 2 (11 al 14 de agosto) — "Antesala del lanzamiento"',
+      posts: [
+        { id: 'p42', network: 'linkedin', type: 'Post', day: 'Lunes 11/08', title: 'El problema no suele ser la falta de plata.', body: 'El problema no suele ser la falta de plata.\nEs que los pagos se juntan sin que los veas venir.\nSueldos, un impuesto, un proveedor, todo la misma semana.\nCuando lo ves, ya es tarde para reaccionar.\nVIERNES te avisa antes. Para que llegues preparado.\n\n#pymes #finanzas #gestión #emprendedores', done: false },
+        { id: 'p43', network: 'instagram', type: 'Carrusel', day: 'Lunes 11/08', title: 'El problema no es la falta de plata.', body: 'Slides:\n1. El problema no es la falta de plata.\n2. Es que los pagos se juntan sin que los veas venir.\n3. Los sueldos. Un impuesto. Un proveedor. Todo la misma semana.\n4. Cuando te das cuenta, ya es tarde.\n5. VIERNES te avisa antes de que pase.\n6. Enterate antes. Llegá preparado.\n\nCaption: Nadie quiere que lo agarre desprevenido un pago grande. VIERNES te avisa con tiempo.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #vencimientos #finanzasparapymes', done: false },
+        { id: 'p44', network: 'instagram', type: 'Placa', day: 'Miércoles 13/08', title: 'Ahora tenés un asesor financiero disponible las 24 horas.', body: 'Caption: Se llama Bocha. Te explica tus números en tu idioma, sin tecnicismos. Te avisa lo que se viene y te ayuda a decidir. Como tener un experto al lado, siempre.\n\n#pymesargentinas #dueñodenegocio #finanzasparapymes #gestiónpyme #tecnología', done: false },
+        { id: 'p45', network: 'instagram', type: 'Placa', day: 'Jueves 14/08', par: true, title: 'Mañana VIERNES está disponible.', body: 'Mañana VIERNES está disponible.\n\nY los primeros que se sumen tienen algo especial.\n\nPreparate.', done: false },
+        { id: 'p46', network: 'linkedin', type: 'Post', day: 'Jueves 14/08', par: true, title: 'Mañana VIERNES está disponible.', body: 'Mañana VIERNES está disponible.\n\nY los primeros que se sumen tienen algo especial.\n\nPreparate.', done: false },
+        { id: 'p47', network: 'stories', type: 'Teaser', day: 'Lunes', title: 'Teaser Bocha — "¿Sabés quién es Bocha?"', body: '', done: false },
+        { id: 'p48', network: 'stories', type: 'Video', day: 'Martes', title: 'Presentación de Bocha en video corto', body: '', done: false },
+        { id: 'p49', network: 'stories', type: 'Countdown', day: 'Miércoles', title: 'Faltan 2 días', body: '', done: false },
+        { id: 'p50', network: 'stories', type: 'Countdown + Pregunta', day: 'Jueves', title: 'Mañana + "¿Querés ser de los primeros?"', body: '', done: false }
+      ]
+    },
+    {
+      id: 'w8',
+      title: 'Semana 3 (15 al 22 de agosto) — "Lanzamiento"',
+      posts: [
+        { id: 'p51', network: 'instagram', type: 'Carrusel', day: 'Viernes 15/08', par: true, title: 'Ya está. VIERNES está disponible.', body: 'Slides:\n1. Ya está. VIERNES está disponible.\n2. La forma más simple de saber cómo va a estar tu caja, antes de que pase.\n3. Visualizá tu caja. Anticipá lo que viene. Enterate antes.\n4. Con Bocha, tu asistente, disponible siempre.\n5. Y porque sos de los primeros: 90% OFF tu primer mes.\n6. Entrá a soyviernes.com. Empezá hoy.\n\nCaption: Llegó el día. VIERNES ya está disponible para todos los que gestionan un negocio y están cansados de adivinar. Los primeros que se sumen tienen 90% de descuento el primer mes. El link está en la bio.\n\n#viernes #lanzamiento #pymesargentinas #dueñodenegocio #finanzasparapymes', done: false },
+        { id: 'p52', network: 'linkedin', type: 'Post', day: 'Viernes 15/08', par: true, title: 'Hoy VIERNES está disponible.', body: 'Hoy VIERNES está disponible.\nUna forma simple de que cualquier PyME pueda ver, anticipar y planificar su caja — sin ser experta en finanzas.\nDurante años, la proyección financiera fue solo para grandes empresas. Hoy dejó de serlo.\nLos primeros que se sumen acceden con 90% off el primer mes.\nsoyviernes.com\n\n#viernes #lanzamiento #pymes #finanzas #tecnología', done: false },
+        { id: 'p53', network: 'instagram', type: 'Carrusel', day: 'Lunes 18/08', title: '90% OFF el primer mes. ¿Por qué?', body: 'Slides:\n1. 90% OFF el primer mes. ¿Por qué?\n2. Porque los que confían primero merecen algo especial.\n3. No es una promo de liquidación. Es un gracias.\n4. Probás VIERNES un mes casi sin costo.\n5. Y decidís con toda la información si te sirve.\n6. Los lugares con este precio son limitados. soyviernes.com\n\nCaption: Queremos que pruebes VIERNES sin barreras. Por eso el primer mes es con 90% off para los primeros que se sumen. Sin letra chica.\n\n#viernes #pymesargentinas #dueñodenegocio #finanzasparapymes #lanzamiento', done: false },
+        { id: 'p54', network: 'instagram', type: 'Reel', day: 'Jueves 21/08', title: 'Demo de la app: las 6 capacidades en 30 segundos.', body: 'Video mostrando la app en uso — las 6 capacidades en 30 segundos.\n\nCaption: Así se ve VIERNES por dentro. Simple, claro, sin vueltas.\n\n#viernes #pymesargentinas #finanzasparapymes #dueñodenegocio #flujodecaja', done: false },
+        { id: 'p55', network: 'stories', type: 'Countdown', day: 'Viernes 15/08', title: 'Countdown a 0 + "YA DISPONIBLE" + link', body: '', done: false },
+        { id: 'p56', network: 'stories', type: 'Repost', day: 'Lunes', title: 'Repost del lanzamiento + testimonios si hay', body: '', done: false },
+        { id: 'p57', network: 'stories', type: 'Urgencia', day: 'Miércoles', title: '¿Cuántos lugares quedan con 90% off?', body: '', done: false },
+        { id: 'p58', network: 'stories', type: 'Demo', day: 'Jueves', title: 'Demo rápida de una capacidad', body: '', done: false }
+      ]
+    },
+    {
+      id: 'w9',
+      title: 'Semana 4 (25 al 31 de agosto) — "Conversión y prueba social"',
+      posts: [
+        { id: 'p59', network: 'linkedin', type: 'Post', day: 'Lunes 25/08', title: 'Facturar mucho no significa que al negocio le vaya bien.', body: 'Facturar mucho no significa que al negocio le vaya bien.\nPodés vender más que nunca y estar más ajustado que nunca.\nLa diferencia está en los indicadores que casi nadie mira.\nVIERNES te los muestra claros. Sin que seas contador.\n\n#pymes #finanzas #gestión #emprendedores', done: false },
+        { id: 'p60', network: 'instagram', type: 'Carrusel', day: 'Lunes 25/08', title: 'Facturar mucho no significa que te vaya bien.', body: 'Slides:\n1. Facturar mucho no significa que te vaya bien.\n2. Podés vender más que nunca y estar más ajustado que nunca.\n3. La diferencia está en los números que casi nadie mira.\n4. Margen real. Excedentes. Lo que te queda de verdad.\n5. VIERNES te los muestra claros. Sin que seas contador.\n6. Entendé tu negocio. De verdad.\n\nCaption: Vender más no siempre es ganar más. VIERNES te muestra lo que realmente pasa en tu negocio.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #finanzasparapymes #indicadores', done: false },
+        { id: 'p61', network: 'instagram', type: 'Placa', day: 'Miércoles 27/08', title: 'Los que ya usan VIERNES dejaron de adivinar.', body: 'Caption: En pocas semanas, cada vez más dueños de PyMEs gestionan su caja con claridad. Sumate. El 90% off sigue disponible por poco tiempo.\n\n#viernes #pymesargentinas #dueñodenegocio #finanzasparapymes', done: false },
+        { id: 'p62', network: 'instagram', type: 'Placa', day: 'Jueves 28/08', title: 'Últimos días con 90% off el primer mes.', body: 'Caption: Si venías pensándolo, este es el momento. La oferta de lanzamiento termina pronto. Entrá a soyviernes.com.\n\n#viernes #pymesargentinas #dueñodenegocio #finanzasparapymes #lanzamiento', done: false },
+        { id: 'p63', network: 'stories', type: 'Encuesta', day: 'Lunes', title: 'Encuesta sobre indicadores', body: '', done: false },
+        { id: 'p64', network: 'stories', type: 'Testimonio', day: 'Miércoles', title: 'Testimonio de un primer usuario', body: '', done: false },
+        { id: 'p65', network: 'stories', type: 'Countdown', day: 'Jueves', title: 'Últimos días de 90% off', body: '', done: false },
+        { id: 'p66', network: 'stories', type: 'Recap', day: 'Viernes', title: 'Recap del mes + agradecimiento', body: '', done: false }
+      ]
+    }
+  ],
+  adMaterial: [
+    { id: 'ad1', title: 'Anuncio principal — versión corta (Meta Ads / Reel)', body: 'Título: Dejá de adivinar si te va a alcanzar.\n\nCuerpo: VIERNES te muestra cómo va a estar tu caja las próximas semanas. Simple, claro, sin ser experto en finanzas. Primer mes con 90% off.\n\nCTA: Probá VIERNES → soyviernes.com' },
+    { id: 'ad2', title: 'Anuncio secundario — capacidades (carrusel pago)', body: 'Título: Todo lo que tu negocio necesita para no perder el control de la plata.\n\n💰 Visualizá tu caja\n📈 Anticipá lo que viene\n🚨 Enterate antes de cada vencimiento\n📊 Entendé tus números reales\n🤖 Consultá con Bocha cuando quieras\n\nCTA: Empezá con 90% off → soyviernes.com' },
+    { id: 'ad3', title: 'Frase integral para landing / slide', body: 'Titular: La claridad que tu negocio necesita.\n\nBajada: Visualizá tu caja. Anticipá problemas. Planificá los próximos meses. Priorizá pagos. Todo en un solo lugar, sin ser experto en finanzas.' }
+  ] }
 };
 
 const DEFAULT_SLOGANS = [
@@ -748,7 +891,14 @@ window.setView = setView;
 
 let data = JSON.parse(JSON.stringify(DEFAULT_DATA));
 let currentMode = 'editor';
+let currentMonthKey = 'julio';
 let expandedPosts = new Set();
+
+function allWeeks() {
+  let weeks = [];
+  Object.keys(data).forEach(key => { weeks = weeks.concat(data[key].weeks); });
+  return weeks;
+}
 
 function loadFromStorage() {
   try {
@@ -756,8 +906,11 @@ function loadFromStorage() {
     if (!saved) return;
     const savedData = JSON.parse(saved);
     const doneMap = {};
-    (savedData.weeks || []).forEach(w => w.posts.forEach(p => { doneMap[p.id] = p.done; }));
-    data.weeks.forEach(w => w.posts.forEach(p => {
+    Object.keys(savedData).forEach(key => {
+      if (!savedData[key] || !savedData[key].weeks) return;
+      savedData[key].weeks.forEach(w => w.posts.forEach(p => { doneMap[p.id] = p.done; }));
+    });
+    allWeeks().forEach(w => w.posts.forEach(p => {
       if (Object.prototype.hasOwnProperty.call(doneMap, p.id)) p.done = doneMap[p.id];
     }));
   } catch(e) {}
@@ -781,7 +934,7 @@ function setMode(mode) {
 
 function countProgress() {
   let total = 0, done = 0;
-  data.weeks.forEach(w => w.posts.forEach(p => { total++; if (p.done) done++; }));
+  data[currentMonthKey].weeks.forEach(w => w.posts.forEach(p => { total++; if (p.done) done++; }));
   return { total, done };
 }
 
@@ -795,7 +948,7 @@ function updateProgress() {
 
 function togglePost(wid, pid) {
   if (currentMode !== 'editor') return;
-  const w = data.weeks.find(x => x.id === wid);
+  const w = data[currentMonthKey].weeks.find(x => x.id === wid);
   const p = w.posts.find(x => x.id === pid);
   p.done = !p.done;
   saveToStorage();
@@ -809,9 +962,15 @@ function toggleBody(pid) {
 }
 
 function findPost(pid) {
-  for (const w of data.weeks) {
+  for (const w of allWeeks()) {
     const p = w.posts.find(x => x.id === pid);
     if (p) return p;
+  }
+  for (const key of Object.keys(data)) {
+    if (data[key].adMaterial) {
+      const ad = data[key].adMaterial.find(x => x.id === pid);
+      if (ad) return ad;
+    }
   }
   return null;
 }
@@ -847,7 +1006,7 @@ function fallbackCopy(text, done) {
 }
 
 function deletePost(wid, pid) {
-  const w = data.weeks.find(x => x.id === wid);
+  const w = data[currentMonthKey].weeks.find(x => x.id === wid);
   w.posts = w.posts.filter(p => p.id !== pid);
   saveToStorage();
   render();
@@ -855,16 +1014,26 @@ function deletePost(wid, pid) {
 
 function deleteWeek(wid) {
   if (!confirm('¿Eliminar esta semana y todos sus posteos?')) return;
-  data.weeks = data.weeks.filter(w => w.id !== wid);
+  data[currentMonthKey].weeks = data[currentMonthKey].weeks.filter(w => w.id !== wid);
   saveToStorage();
   render();
 }
 
 function addWeek() {
-  data.weeks.push({ id: uid(), title: 'Nueva semana', posts: [] });
+  data[currentMonthKey].weeks.push({ id: uid(), title: 'Nueva semana', posts: [] });
   saveToStorage();
   render();
 }
+
+function setMonth(key) {
+  currentMonthKey = key;
+  document.getElementById('header-mes').textContent = data[key].label;
+  document.getElementById('month-tab-julio').classList.toggle('active', key === 'julio');
+  document.getElementById('month-tab-agosto').classList.toggle('active', key === 'agosto');
+  document.getElementById('capacidades-box').style.display = key === 'agosto' ? 'block' : 'none';
+  render();
+}
+window.setMonth = setMonth;
 
 function exportData() {
   const json = JSON.stringify(data, null, 2);
@@ -887,7 +1056,7 @@ function render() {
   const root = document.getElementById('weeks-root');
   root.innerHTML = '';
 
-  data.weeks.forEach(week => {
+  data[currentMonthKey].weeks.forEach(week => {
     const doneCount = week.posts.filter(p => p.done).length;
 
     const weekEl = document.createElement('div');
@@ -935,6 +1104,41 @@ function render() {
     weekEl.appendChild(grid);
     root.appendChild(weekEl);
   });
+
+  renderAdMaterial();
+}
+
+function renderAdMaterial() {
+  const root = document.getElementById('ad-material-root');
+  root.innerHTML = '';
+  const adMaterial = data[currentMonthKey].adMaterial;
+  if (!adMaterial || !adMaterial.length) return;
+
+  const section = document.createElement('div');
+  section.className = 'ad-material-section';
+
+  const header = document.createElement('div');
+  header.className = 'ad-material-header';
+  header.textContent = '📣 Material publicitario (anuncios pagos)';
+  section.appendChild(header);
+
+  adMaterial.forEach(ad => {
+    const expanded = expandedPosts.has(ad.id);
+    const card = document.createElement('div');
+    card.className = 'ad-card';
+    card.innerHTML =
+      '<div class="ad-card-title"></div>' +
+      '<div class="card-actions-row">' +
+        '<button class="card-toggle-body" onclick="toggleBody(\'' + ad.id + '\')">' + (expanded ? '↑ Ocultar' : '↓ Ver completo') + '</button>' +
+        '<button class="card-copy-btn" data-label="📋 Copiar copy" onclick="copyBody(\'' + ad.id + '\', this)">📋 Copiar copy</button>' +
+      '</div>' +
+      (expanded ? '<div class="ad-card-body"></div>' : '');
+    card.querySelector('.ad-card-title').textContent = ad.title;
+    if (expanded) card.querySelector('.ad-card-body').textContent = ad.body;
+    section.appendChild(card);
+  });
+
+  root.appendChild(section);
 }
 
 loadFromStorage();
