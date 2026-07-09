@@ -900,6 +900,12 @@ function allWeeks() {
   return weeks;
 }
 
+function applyDoneMap(doneMap) {
+  allWeeks().forEach(w => w.posts.forEach(p => {
+    if (Object.prototype.hasOwnProperty.call(doneMap, p.id)) p.done = doneMap[p.id];
+  }));
+}
+
 function loadFromStorage() {
   try {
     const saved = localStorage.getItem('viernes-cal-v2');
@@ -910,14 +916,30 @@ function loadFromStorage() {
       if (!savedData[key] || !savedData[key].weeks) return;
       savedData[key].weeks.forEach(w => w.posts.forEach(p => { doneMap[p.id] = p.done; }));
     });
-    allWeeks().forEach(w => w.posts.forEach(p => {
-      if (Object.prototype.hasOwnProperty.call(doneMap, p.id)) p.done = doneMap[p.id];
-    }));
+    applyDoneMap(doneMap);
   } catch(e) {}
 }
 
 function saveToStorage() {
   try { localStorage.setItem('viernes-cal-v2', JSON.stringify(data)); } catch(e) {}
+}
+
+async function syncFromServer() {
+  try {
+    const res = await fetch('/api/state', { cache: 'no-store' });
+    if (!res.ok) return;
+    const doneMap = await res.json();
+    applyDoneMap(doneMap);
+    render();
+  } catch(e) {}
+}
+
+function pushDoneToServer(id, done) {
+  fetch('/api/state', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ id, done })
+  }).catch(() => {});
 }
 
 function uid() { return 'id' + Math.random().toString(36).slice(2,9); }
@@ -952,6 +974,7 @@ function togglePost(wid, pid) {
   const p = w.posts.find(x => x.id === pid);
   p.done = !p.done;
   saveToStorage();
+  pushDoneToServer(pid, p.done);
   render();
 }
 
@@ -1144,6 +1167,7 @@ function renderAdMaterial() {
 loadFromStorage();
 loadSlogansFromStorage();
 setMode('editor');
+syncFromServer();
 </script>
 </body>
 </html>
