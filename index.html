@@ -906,18 +906,22 @@ function applyDoneMap(doneMap) {
   }));
 }
 
-function loadFromStorage() {
+function getLocalDoneMap() {
   try {
     const saved = localStorage.getItem('viernes-cal-v2');
-    if (!saved) return;
+    if (!saved) return {};
     const savedData = JSON.parse(saved);
     const doneMap = {};
     Object.keys(savedData).forEach(key => {
       if (!savedData[key] || !savedData[key].weeks) return;
       savedData[key].weeks.forEach(w => w.posts.forEach(p => { doneMap[p.id] = p.done; }));
     });
-    applyDoneMap(doneMap);
-  } catch(e) {}
+    return doneMap;
+  } catch(e) { return {}; }
+}
+
+function loadFromStorage() {
+  applyDoneMap(getLocalDoneMap());
 }
 
 function saveToStorage() {
@@ -928,10 +932,20 @@ async function syncFromServer() {
   try {
     const res = await fetch('/api/state', { cache: 'no-store' });
     if (!res.ok) return;
-    const doneMap = await res.json();
-    applyDoneMap(doneMap);
+    const serverMap = await res.json();
+    applyDoneMap(serverMap);
     render();
+    migrateLocalDoneToServer(serverMap);
   } catch(e) {}
+}
+
+function migrateLocalDoneToServer(serverMap) {
+  const localMap = getLocalDoneMap();
+  Object.keys(localMap).forEach(id => {
+    if (localMap[id] === true && !Object.prototype.hasOwnProperty.call(serverMap, id)) {
+      pushDoneToServer(id, true);
+    }
+  });
 }
 
 function pushDoneToServer(id, done) {

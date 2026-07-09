@@ -1,10 +1,17 @@
 import { getStore } from '@netlify/blobs';
 
+// Each post's done state lives under its own blob key so concurrent
+// toggles never race on a shared read-modify-write of one big JSON blob.
 export default async (req) => {
   const store = getStore('viernes-state');
 
   if (req.method === 'GET') {
-    const doneMap = (await store.get('done', { type: 'json' })) || {};
+    const { blobs } = await store.list();
+    const entries = await Promise.all(
+      blobs.map(async (b) => [b.key, await store.get(b.key, { type: 'json' })])
+    );
+    const doneMap = {};
+    entries.forEach(([key, value]) => { doneMap[key] = value; });
     return new Response(JSON.stringify(doneMap), {
       headers: { 'content-type': 'application/json', 'cache-control': 'no-store' }
     });
@@ -18,9 +25,7 @@ export default async (req) => {
     if (!body || typeof body.id !== 'string' || typeof body.done !== 'boolean') {
       return new Response('Bad request', { status: 400 });
     }
-    const doneMap = (await store.get('done', { type: 'json' })) || {};
-    doneMap[body.id] = body.done;
-    await store.setJSON('done', doneMap);
+    await store.setJSON(body.id, body.done);
     return new Response(JSON.stringify({ ok: true }), {
       headers: { 'content-type': 'application/json' }
     });
