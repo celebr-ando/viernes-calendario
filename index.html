@@ -196,12 +196,21 @@
     padding: 3px 9px;
     border-radius: 20px;
   }
-  .tag-network.instagram { background: #FAEEDA; color: #633806; }
-  .tag-network.linkedin { background: #E6F1FB; color: #0C447C; }
+  .tag-network.instagram { background: var(--salvia); color: var(--texto); }
+  .tag-network.linkedin { background: var(--amarillo); color: var(--azul); }
   .tag-network.stories { background: #EEEDFE; color: #3C3489; }
   .tag-network.tiktok { background: #FBEAF0; color: #72243E; }
   .tag-network.youtube { background: #FAECE7; color: #712B13; }
   .tag-network.newsletter { background: #E1F5EE; color: #085041; }
+
+  .tag-pilar {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: var(--borde);
+    color: var(--grafito);
+  }
 
   .tag-day {
     font-size: 11px;
@@ -576,8 +585,8 @@
     <div class="reader-msg">Vista de cliente — solo lectura. Para editar, usá el modo editor.</div>
 
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#d4af37"></div> Instagram</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#185FA5"></div> LinkedIn</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#95a996"></div> Instagram</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#fdda6a"></div> LinkedIn</div>
       <div class="legend-item"><div class="legend-dot" style="background:#534AB7"></div> Stories</div>
       <div class="legend-item"><div class="legend-dot" style="background:#993C1D"></div> YouTube</div>
       <div class="legend-item"><div class="legend-dot" style="background:#0F6E56"></div> Newsletter</div>
@@ -648,59 +657,57 @@ const DEFAULT_DATA = {
   ]},
   agosto: { label: 'Agosto 2026', weeks: [
     {
-      id: 'w10',
-      title: 'Semana 1 — Reactivación (1 al 7 de agosto)',
+      id: 'w14',
+      title: 'Semana 1 (1 al 7 de agosto) — "El problema que nadie nombra"',
       posts: [
-        { id: 'a1', network: 'instagram', type: 'Carrusel', day: 'Lunes 03/08', title: 'Arranca el mes. Y con él, la misma pregunta de siempre.', body: 'Slides:\n1. Arranca el mes. Y con él, la misma pregunta de siempre.\n2. ¿Me va a alcanzar para pagar todo?\n3. Los sueldos. Los proveedores. El alquiler. Los impuestos. Todo se acomoda en el mismo puñado de días.\n4. Y vos hacés lo que podés: mirás el banco, revisás la planilla, sacás cuentas de memoria.\n5. Pero entre lo que tenés hoy y lo que va a entrar, hay una zona gris. Y esa zona gris es la que te quita el sueño.\n6. Empezar el mes no debería ser adivinar si llegás. Debería ser saber, con tiempo, cómo lo vas a cerrar. VIERNES.\n\nCaption: Primeros días del mes. Y otra vez la misma pregunta: ¿me va a alcanzar para pagar todo?\n\nLos sueldos, los proveedores, el alquiler, los impuestos. Todo cae junto. Y entre lo que tenés hoy y lo que esperás que entre, hay una zona gris que te mantiene despierto.\n\nArrancar el mes no debería ser adivinar si llegás. Debería ser saber, con tiempo, cómo lo vas a cerrar.\n\n¿Vos cómo arrancás el mes: con la cuenta clara o sacando números de memoria?\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #flujodecaja #finanzasparapymes', done: false },
-        { id: 'a2', network: 'linkedin', type: 'Post', day: 'Lunes 03/08', title: 'Los primeros días del mes son, para muchos dueños de pyme, los más tensos.', body: 'Los primeros días del mes son, para muchos dueños de pyme, los más tensos.\n\nEs cuando se acomodan casi todos los compromisos: sueldos, proveedores, alquiler, impuestos. Todo en el mismo puñado de días.\n\nY la pregunta de fondo siempre es la misma: ¿va a alcanzar?\n\nLa mayoría la responde mirando el saldo del banco. Pero el saldo de hoy no dice nada sobre lo que va a entrar y salir las próximas semanas.\n\nEntre lo que hay y lo que se espera, existe una zona gris. Y en esa zona gris es donde se toman —o se postergan— las decisiones más importantes del negocio.\n\nArrancar el mes no debería ser adivinar si se llega. Debería ser saber, con anticipación, cómo se va a cerrar.\n\n¿Lo estás viendo en tu empresa?\n\n#pymes #finanzas #gestión #emprendedores', done: false },
-        { id: 'a3', network: 'linkedin', type: 'Carrusel PDF', day: 'Miércoles 05/08', title: 'Bajaron las tasas de financiamiento pyme. Buena noticia, en principio.', body: 'Slides:\n1. Bajaron las tasas de financiamiento pyme. Buena noticia, en principio.\n2. La mayoría no toma ese crédito para crecer. Lo toma para sostener el día a día.\n3. La morosidad en créditos pyme es varias veces más alta que en las grandes. No es falta de voluntad de pago. Es falta de previsibilidad.\n4. Cuando no sabés qué vas a cobrar la semana que viene, salís a buscar plata cuando el bache ya apareció.\n5. Cuando lo ves venir, planificás en lugar de apagar incendios.\n6. La diferencia casi nunca está en la tasa. Está en si lo viste venir a tiempo.\n\nCaption: Bajaron las tasas de financiamiento pyme. Buena noticia, en principio.\n\nPero la mayoría no está tomando ese crédito para crecer. Lo está tomando para sostener el día a día.\n\nLa morosidad en créditos pyme se mantiene varias veces más alta que en las grandes empresas. No es un problema de voluntad de pago. Es un problema de previsibilidad.\n\nLa diferencia entre financiarse para sobrevivir y financiarse para crecer casi nunca está en la tasa. Está en si lo viste venir a tiempo.\n\n¿Lo estás viendo en tu empresa?\n\n#pymes #finanzas #gestión #emprendedores', done: false },
-        { id: 'a4', network: 'instagram', type: 'Carrusel', day: 'Miércoles 05/08', title: 'Bajaron las tasas, pero la mayoría de las pymes no toma crédito para crecer.', body: 'Slides:\n1. Bajaron las tasas de financiamiento pyme. Buena noticia, en principio.\n2. La mayoría no toma ese crédito para crecer. Lo toma para sostener el día a día.\n3. La morosidad en créditos pyme es varias veces más alta que en las grandes. No es falta de voluntad de pago. Es falta de previsibilidad.\n4. Cuando no sabés qué vas a cobrar la semana que viene, salís a buscar plata cuando el bache ya apareció.\n5. Cuando lo ves venir, planificás en lugar de apagar incendios.\n6. La diferencia casi nunca está en la tasa. Está en si lo viste venir a tiempo.\n\nCaption: Bajaron las tasas, pero la mayoría de las pymes no toma crédito para crecer. Lo toma para llegar a fin de mes.\n\nLa diferencia entre financiarte para sobrevivir o para crecer no está en la tasa. Está en si lo viste venir a tiempo.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #finanzasparapymes #negocios', done: false },
-        { id: 'a5', network: 'instagram', type: 'Placa', day: 'Viernes 07/08', title: 'Lo más caro de un negocio no es lo que gastás. Es lo que no ves venir.', body: 'Texto de placa: Lo más caro de un negocio no es lo que gastás. Es lo que no ves venir.\n\nCaption: Un pago que se te juntó con otro. Un cliente que se atrasó justo esa semana. Un impuesto que no tenías en el radar.\n\nNinguno de esos te avisa. Y lo que no ves venir siempre sale más caro.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #finanzasparapymes #emprendedoresargentinos', done: false },
-        { id: 'a6', network: 'instagram', type: 'Placa', day: 'Domingo 09/08', title: 'Cerrá la semana sabiendo cómo empezás la próxima.', body: 'Texto de placa: Cerrá la semana sabiendo cómo empezás la próxima.\n\nCaption: La mayoría llega al finde agotado y sin saber cómo arranca el lunes. ¿Y si supieras exactamente cómo venís antes de desconectar?\n\nPronto te vamos a mostrar cómo.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #finanzasparapymes #emprendedoresargentinos', done: false },
-        { id: 'a7', network: 'stories', type: 'Encuesta', day: 'Lunes', title: '¿Cómo arrancás el mes?', body: 'Opciones: con la cuenta clara / sacando números de memoria / no quiero ni pensarlo', done: false },
-        { id: 'a8', network: 'stories', type: 'Pregunta abierta', day: 'Miércoles', title: '¿Cuál es tu mayor dolor de cabeza con la plata del negocio?', body: '', done: false },
-        { id: 'a9', network: 'stories', type: 'Frase', day: 'Viernes', title: 'Lo que no ves venir siempre sale más caro.', body: '', done: false }
+        { id: 'a1', network: 'instagram', type: 'Placa', day: 'Lunes 03/08', pilar: 'Contexto PyME', title: 'La mayoría de las PyMEs manejan su plata "a ojo"', body: '', done: false },
+        { id: 'a2', network: 'linkedin', type: 'Post', day: 'Martes 04/08', pilar: 'Contexto PyME', title: 'El costo real de no saber cuánta plata vas a tener el mes que viene', body: '', done: false },
+        { id: 'a3', network: 'instagram', type: 'Stories', day: 'Miércoles 05/08', title: 'Pregunta a la audiencia: "¿sabés cuánta plata vas a tener en 30 días?"', body: '', done: false },
+        { id: 'a4', network: 'instagram', type: 'Carrusel', day: 'Jueves 06/08', pilar: 'Contexto PyME', title: 'Señales de que tu negocio necesita anticipar mejor su caja', body: '', done: false },
+        { id: 'a5', network: 'linkedin', type: 'Post', day: 'Viernes 07/08', pilar: 'Contexto PyME', title: 'Por qué la gestión financiera de una PyME no es la de una multinacional', body: '', done: false }
       ]
     },
     {
-      id: 'w11',
-      title: 'Semana 2 — Las capacidades (8 al 14 de agosto)',
+      id: 'w15',
+      title: 'Semana 2 (8 al 14 de agosto) — "Algo está por cambiar"',
       posts: [
-        { id: 'a10', network: 'instagram', type: 'Carrusel', day: 'Martes 11/08', title: 'Mirás el saldo del banco y creés que esa es tu caja.', body: 'Slides:\n1. Mirás el saldo del banco y creés que esa es tu caja.\n2. Pero el saldo de hoy no te dice si vas a llegar a fin de mes.\n3. Tu caja no es un número. Es una película: lo que entró, lo que va a entrar, lo que tenés que pagar.\n4. Cuando la ves completa, dejás de tener sorpresas.\n5. Visualizá tu caja de un vistazo. Así de simple. VIERNES.\n\nCaption: El saldo del banco es una foto. Tu caja es una película.\n\nLa diferencia entre una y otra es lo que te agarra desprevenido a fin de mes.\n\n#pymesargentinas #dueñodenegocio #flujodecaja #gestiónpyme #finanzasparapymes', done: false },
-        { id: 'a11', network: 'linkedin', type: 'Post', day: 'Martes 11/08', title: 'La mayoría de los dueños mira el saldo del banco y cree que eso es su caja.', body: 'La mayoría de los dueños mira el saldo del banco y cree que eso es su caja.\n\nPero el saldo de hoy es una foto. No dice nada sobre lo que va a entrar y salir las próximas semanas.\n\nTu caja no es un número. Es el flujo completo: lo que entró, lo que está por entrar, lo que tenés que pagar.\n\nCuando lo ves completo, dejás de tener sorpresas a fin de mes.\n\n#pymes #finanzas #gestión #emprendedores', done: false },
-        { id: 'a12', network: 'instagram', type: 'Placa', day: 'Jueves 13/08', title: '¿Y si supieras hoy cómo va a estar tu caja en 3 semanas?', body: 'Texto de placa: ¿Y si supieras hoy cómo va a estar tu caja en 3 semanas?\n\nCaption: No es adivinar. Es proyectar.\n\nVer los pagos antes de que se junten. Llegar preparado en vez de corriendo de atrás.\n\nAnticipá lo que viene.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #finanzasparapymes #proyecciones', done: false },
-        { id: 'a13', network: 'instagram', type: 'Carrusel', day: 'Viernes 14/08', title: 'El problema no es la falta de plata.', body: 'Slides:\n1. El problema no es la falta de plata.\n2. Es que los pagos se juntan sin que los veas venir.\n3. Los sueldos. Un impuesto. Un proveedor. Todo la misma semana.\n4. VIERNES te avisa antes de que pase.\n5. Y si tenés una duda, un asistente te la explica en tu idioma. Enterate a tiempo. Decidí con calma.\n\nCaption: Nadie quiere que lo agarre desprevenido un pago grande. Lo peor no es pagar, es no verlo venir.\n\nVIERNES te avisa con tiempo. Y si necesitás entender algo, te lo explica sin tecnicismos.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #vencimientos #finanzasparapymes', done: false },
-        { id: 'a14', network: 'linkedin', type: 'Post', day: 'Viernes 14/08', title: 'El problema de fondo casi nunca es la falta de plata.', body: 'El problema de fondo casi nunca es la falta de plata. Es que los compromisos se acumulan sin que se vean venir.\n\nSueldos, un impuesto, un proveedor, todo en la misma semana. Cuando se detecta, ya es tarde para reaccionar con margen.\n\nAnticipar esos momentos —y poder consultar qué hacer cuando aparecen— cambia por completo la forma de decidir.\n\n#pymes #finanzas #gestión #emprendedores', done: false },
-        { id: 'a15', network: 'stories', type: 'Teaser', day: 'Lunes', title: 'Primera captura de la app', body: 'Teaser: primera captura de la app (parcial, sin mostrar todo)', done: false },
-        { id: 'a16', network: 'stories', type: 'Encuesta', day: 'Miércoles', title: '¿Qué te daría más tranquilidad?', body: 'Opciones: ver mi caja a futuro / que me avisen los pagos / entender mis números', done: false },
-        { id: 'a17', network: 'stories', type: 'Countdown', day: 'Viernes', title: 'Falta poco', body: '', done: false }
+        { id: 'a6', network: 'instagram', type: 'Placa', day: 'Lunes 10/08', pilar: 'Bocha (teaser)', title: 'Algo se está por venir — sin nombrar el producto', body: '', done: false },
+        { id: 'a7', network: 'linkedin', type: 'Post', day: 'Martes 11/08', pilar: 'Contexto PyME', title: 'Datos reales sobre financiamiento y supervivencia de PyMEs argentinas', body: '', done: false },
+        { id: 'a8', network: 'instagram', type: 'Stories', day: 'Miércoles 12/08', title: 'Encuesta: "¿qué es lo que más te cuesta de gestionar la plata del negocio?"', body: '', done: false },
+        { id: 'a9', network: 'instagram', type: 'Carrusel', day: 'Jueves 13/08', pilar: 'Bocha (teaser)', title: 'Un asistente que te ayuda a anticipar, no a explicarte lo que ya pasó', body: '', done: false },
+        { id: 'a10', network: 'linkedin', type: 'Post', day: 'Viernes 14/08', pilar: 'Contexto PyME', title: 'La brecha real entre una PyME y una multinacional en planificación financiera', body: '', done: false }
       ]
     },
     {
-      id: 'w12',
-      title: 'Semana 3 — Cuenta regresiva + Lanzamiento (15 al 18 de agosto)',
+      id: 'w16',
+      title: 'Semana 3 (15 al 21 de agosto) — "Lanzamiento"',
       posts: [
-        { id: 'a18', network: 'instagram', type: 'Placa', day: 'Sábado 15/08', par: true, title: 'El martes lo vas a poder usar.', body: 'Texto de placa: El martes lo vas a poder usar.\n\nCaption: Estas semanas hablamos del problema. El martes te mostramos la solución.\n\nVIERNES llega para que dejes de adivinar con la plata de tu negocio. Quedáte cerca.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #finanzasparapymes #lanzamiento', done: false },
-        { id: 'a19', network: 'linkedin', type: 'Post', day: 'Sábado 15/08', par: true, title: 'El martes lo vas a poder usar.', body: 'Estas semanas hablamos del problema. El martes te mostramos la solución.\n\nVIERNES llega para que dejes de adivinar con la plata de tu negocio. Quedáte cerca.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #finanzasparapymes #lanzamiento', done: false },
-        { id: 'a20', network: 'instagram', type: 'Placa', day: 'Lunes 17/08', title: 'Mañana.', body: 'Texto de placa: Mañana.\n\nCaption: Mañana VIERNES está disponible. Y los primeros que se sumen tienen algo especial. Preparate.\n\n#pymesargentinas #dueñodenegocio #gestiónpyme #finanzasparapymes #lanzamiento', done: false },
-        { id: 'a21', network: 'stories', type: 'Countdown', day: 'Lunes 17/08', title: 'Cuenta regresiva a 1 día + teaser final del isotipo', body: 'Cuenta regresiva a 1 día + teaser final del isotipo completo.', done: false },
-        { id: 'a22', network: 'instagram', type: 'Carrusel', day: 'Martes 18/08', title: 'Ya está. VIERNES se puede usar.', body: 'Slides:\n1. Ya está. VIERNES se puede usar.\n2. La forma más simple de saber cómo va a estar tu caja, antes de que pase.\n3. Visualizá tu caja. Anticipá lo que viene. Enterate antes de cada pago.\n4. Con un asistente que te explica todo en tu idioma.\n5. Y arranca en beta: gratis por 30 días.\n6. Entrá a soyviernes.com.ar. Empezá hoy.\n\nCaption: Llegó el día. VIERNES ya está disponible para todos los que gestionan un negocio y están cansados de adivinar con la plata.\n\nBeta gratis por 30 días. Entrá desde el celular o la compu, sin instalar nada.\n\nEl link está en la bio.\n\n#viernes #lanzamiento #pymesargentinas #dueñodenegocio #finanzasparapymes', done: false },
-        { id: 'a23', network: 'linkedin', type: 'Post', day: 'Martes 18/08', title: 'Hoy VIERNES está disponible.', body: 'Hoy VIERNES está disponible.\n\nUna forma simple de que cualquier pyme pueda ver, anticipar y planificar su caja sin ser experta en finanzas.\n\nDurante años, la proyección financiera fue solo para grandes empresas. Hoy dejó de serlo.\n\nArranca en beta gratuita por 30 días.\n\nsoyviernes.com.ar\n\n#viernes #lanzamiento #pymes #finanzas #tecnología', done: false }
+        { id: 'a11', network: 'instagram', type: 'Placa', day: 'Lunes 17/08', par: true, pilar: 'Lanzamiento', title: 'Countdown: "Mañana se termina la espera"', body: '', done: false },
+        { id: 'a12', network: 'linkedin', type: 'Post', day: 'Lunes 17/08', par: true, pilar: 'Lanzamiento', title: 'Countdown: "Mañana se termina la espera"', body: '', done: false },
+        { id: 'a13', network: 'instagram', type: 'Carrusel', day: 'Martes 18/08', par: true, pilar: 'Lanzamiento', title: '"Ya está. VIERNES llegó." — reveal del producto + oferta 90% off / cupo 30', body: '', done: false },
+        { id: 'a14', network: 'linkedin', type: 'Post oficial', day: 'Martes 18/08', par: true, pilar: 'Lanzamiento', title: '"Ya está. VIERNES llegó." — reveal del producto + oferta 90% off / cupo 30', body: '', done: false },
+        { id: 'a15', network: 'instagram', type: 'Stories', day: 'Miércoles 19/08', title: 'Preguntas y respuestas en vivo sobre la oferta', body: '', done: false },
+        { id: 'a16', network: 'instagram', type: 'Carrusel', day: 'Jueves 20/08', pilar: 'Característica', title: 'Cómo funciona VIERNES — paso a paso, sin jerga', body: '', done: false },
+        { id: 'a17', network: 'linkedin', type: 'Post', day: 'Viernes 21/08', pilar: 'Lanzamiento', title: 'Por qué creamos VIERNES — historia y propósito (voz de marca)', body: '', done: false }
       ]
     },
     {
-      id: 'w13',
-      title: 'Semana 4 — Post-lanzamiento (19 al 31 de agosto)',
+      id: 'w17',
+      title: 'Semana 4 (22 al 28 de agosto) — "Bocha y refuerzo de oferta"',
       posts: [
-        { id: 'a24', network: 'instagram', type: 'Carrusel', day: 'Jueves 20/08', par: true, title: '¿Ya entraste a VIERNES? Empezar es más fácil de lo que pensás.', body: 'Slides:\n1. ¿Ya entraste a VIERNES? Empezar es más fácil de lo que pensás.\n2. Paso 1: Entrá a soyviernes.com.ar desde el celular o la compu. Sin instalar nada.\n3. Paso 2: Cargá lo que entra y lo que sale. Te guiamos en cada paso.\n4. Paso 3: Mirá cómo va a estar tu caja las próximas semanas. Así de simple.\n5. Y si te trabás, escribinos. Estamos para ayudarte. VIERNES.\n\nCaption: Empezar con VIERNES te lleva menos de lo que pensás. Entrás, cargás tus movimientos y ya ves cómo viene tu caja.\n\nY si en algún momento te perdés, escribinos. En esta etapa te acompañamos en todo.\n\nBeta gratis por 30 días. Link en la bio.\n\n#viernes #pymesargentinas #dueñodenegocio #finanzasparapymes #gestiónpyme', done: false },
-        { id: 'a25', network: 'linkedin', type: 'Post', day: 'Jueves 20/08', par: true, title: '¿Ya entraste a VIERNES? Empezar es más fácil de lo que pensás.', body: 'Slides:\n1. ¿Ya entraste a VIERNES? Empezar es más fácil de lo que pensás.\n2. Paso 1: Entrá a soyviernes.com.ar desde el celular o la compu. Sin instalar nada.\n3. Paso 2: Cargá lo que entra y lo que sale. Te guiamos en cada paso.\n4. Paso 3: Mirá cómo va a estar tu caja las próximas semanas. Así de simple.\n5. Y si te trabás, escribinos. Estamos para ayudarte. VIERNES.\n\nCaption: Empezar con VIERNES te lleva menos de lo que pensás. Entrás, cargás tus movimientos y ya ves cómo viene tu caja.\n\nY si en algún momento te perdés, escribinos. En esta etapa te acompañamos en todo.\n\nBeta gratis por 30 días. Link en la bio.\n\n#viernes #pymesargentinas #dueñodenegocio #finanzasparapymes #gestiónpyme', done: false },
-        { id: 'a26', network: 'instagram', type: 'Placa', day: 'Sábado 22/08', title: 'Este viernes, cerrá la semana sabiendo cómo arranca la próxima.', body: 'Texto de placa: Este viernes, cerrá la semana sabiendo cómo arranca la próxima.\n\nCaption: Antes, el viernes cerrabas sin saber cómo venías. Ahora podés ver tu caja de las próximas semanas antes de desconectar.\n\nEse es el viernes que queremos para tu negocio.\n\nProbá VIERNES, gratis por 30 días. Link en bio.\n\n#viernes #pymesargentinas #dueñodenegocio #finanzasparapymes #flujodecaja', done: false },
-        { id: 'a27', network: 'instagram', type: 'Carrusel', day: 'Martes 25/08', par: true, title: 'Lo que más sorprende a los que ya están usando VIERNES.', body: 'Slides:\n1. Lo que más sorprende a los que ya están usando VIERNES.\n2. "No sabía que podía ver mi caja con tantas semanas de anticipación."\n3. "Me di cuenta de pagos que se me venían juntando y no los había visto."\n4. "Es más simple de lo que esperaba. No hace falta saber de finanzas."\n5. ¿Y vos? Todavía estás a tiempo de probarlo gratis. VIERNES.\n\nCaption: En los primeros días, lo que más nos dicen los que probaron VIERNES es que es más simple de lo que esperaban. Y que ver la caja a futuro les cambió la forma de planificar.\n\nTodavía estás a tiempo de sumarte a la beta gratis.\n\n#viernes #pymesargentinas #dueñodenegocio #finanzasparapymes #gestiónpyme', done: false },
-        { id: 'a28', network: 'linkedin', type: 'Post', day: 'Martes 25/08', par: true, title: 'Lo que más sorprende a los que ya están usando VIERNES.', body: 'Slides:\n1. Lo que más sorprende a los que ya están usando VIERNES.\n2. "No sabía que podía ver mi caja con tantas semanas de anticipación."\n3. "Me di cuenta de pagos que se me venían juntando y no los había visto."\n4. "Es más simple de lo que esperaba. No hace falta saber de finanzas."\n5. ¿Y vos? Todavía estás a tiempo de probarlo gratis. VIERNES.\n\nCaption: En los primeros días, lo que más nos dicen los que probaron VIERNES es que es más simple de lo que esperaban. Y que ver la caja a futuro les cambió la forma de planificar.\n\nTodavía estás a tiempo de sumarte a la beta gratis.\n\n#viernes #pymesargentinas #dueñodenegocio #finanzasparapymes #gestiónpyme', done: false },
-        { id: 'a29', network: 'instagram', type: 'Placa', day: 'Viernes 28/08', title: 'Todavía estás a tiempo de probarlo sin costo.', body: 'Texto de placa: Todavía estás a tiempo de probarlo sin costo.\n\nCaption: La beta gratis de VIERNES sigue abierta. 30 días para ver tu caja con claridad, anticipar tus pagos y decidir con calma.\n\nSin instalar nada, desde el celular o la compu. Link en bio.\n\n#viernes #pymesargentinas #dueñodenegocio #finanzasparapymes #gestiónpyme', done: false },
-        { id: 'a30', network: 'stories', type: 'Demo', day: 'Miércoles', title: 'Demo rápida de una funcionalidad', body: '', done: false },
-        { id: 'a31', network: 'stories', type: 'Testimonio', day: 'Viernes', title: 'Testimonio o comentario de un usuario (con permiso)', body: '', done: false },
-        { id: 'a32', network: 'stories', type: 'Recordatorio', day: 'Domingo', title: 'Recordatorio beta gratis + link', body: '', done: false }
+        { id: 'a18', network: 'instagram', type: 'Carrusel', day: 'Lunes 24/08', pilar: 'Bocha', title: 'Presentación de Bocha — el asistente en acción', body: '', done: false },
+        { id: 'a19', network: 'linkedin', type: 'Post', day: 'Martes 25/08', pilar: 'Característica', title: 'Qué resuelve VIERNES que ninguna planilla resuelve', body: '', done: false },
+        { id: 'a20', network: 'instagram', type: 'Stories', day: 'Miércoles 26/08', title: 'Simulación de consulta real a Bocha', body: '', done: false },
+        { id: 'a21', network: 'instagram', type: 'Placa', day: 'Jueves 27/08', pilar: 'Lanzamiento', title: '"Quedan X lugares con 90% off" — urgencia de cupo', body: '', done: false },
+        { id: 'a22', network: 'linkedin', type: 'Post', day: 'Viernes 28/08', pilar: 'Contexto PyME', title: 'Cierre de mes: qué aprendimos en la primera semana de VIERNES en vivo', body: '', done: false }
+      ]
+    },
+    {
+      id: 'w18',
+      title: 'Semana 5 (29 al 31 de agosto) — "Social proof"',
+      posts: [
+        { id: 'a23', network: 'instagram', type: 'Placa', day: 'Lunes 31/08', par: true, pilar: 'Lanzamiento', title: 'Primeros usuarios usando VIERNES — social proof inicial', body: '', done: false },
+        { id: 'a24', network: 'linkedin', type: 'Post', day: 'Lunes 31/08', par: true, pilar: 'Lanzamiento', title: 'Primeros usuarios usando VIERNES — social proof inicial', body: '', done: false }
       ]
     }
   ],
@@ -1093,6 +1100,7 @@ function render() {
             '<span class="tag-network ' + post.network + '">' + post.network.charAt(0).toUpperCase() + post.network.slice(1) + '</span>' +
             '<span class="tag-day">' + (post.day || '') + '</span>' +
             '<span class="tag-type">' + post.type + '</span>' +
+            (post.pilar ? '<span class="tag-pilar">' + post.pilar + '</span>' : '') +
           '</div>' +
           '<input type="checkbox" class="card-checkbox' + (currentMode !== 'editor' ? ' readonly' : '') + '" ' + (post.done ? 'checked' : '') + ' onchange="togglePost(\'' + week.id + '\',\'' + post.id + '\')" />' +
         '</div>' +
