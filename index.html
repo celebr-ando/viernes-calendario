@@ -452,6 +452,111 @@
     border-radius: 8px;
   }
 
+  /* MONTH GRID */
+  .grid-dow-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 6px; }
+  .grid-dow-header { font-size: 11px; font-weight: 700; color: var(--texto-muted); text-align: center; text-transform: uppercase; letter-spacing: 0.03em; }
+  .grid-week-block { margin-bottom: 4px; }
+  .phase-band {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blanco);
+    background: var(--azul);
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin: 18px 0 8px;
+    display: inline-block;
+  }
+  .grid-week-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 6px; }
+  .grid-day-cell {
+    min-height: 92px;
+    border-radius: 8px;
+    border: 0.5px solid var(--borde);
+    padding: 6px 7px;
+    cursor: pointer;
+    position: relative;
+    background: var(--blanco);
+    transition: opacity 0.15s, border-color 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .grid-day-cell:hover { border-color: #c8c4bc; }
+  .grid-day-cell.empty-day { background: transparent; border: none; cursor: default; }
+  .grid-day-cell.has-post.net-instagram { background: var(--salvia); }
+  .grid-day-cell.has-post.net-linkedin { background: var(--amarillo); }
+  .grid-day-cell.has-post.net-split { background: linear-gradient(135deg, var(--salvia) 0%, var(--salvia) 48%, var(--amarillo) 52%, var(--amarillo) 100%); }
+  .grid-day-cell.day-done { opacity: 0.4; }
+  .grid-day-num { font-size: 12px; font-weight: 700; color: var(--texto); }
+  .grid-day-icons { font-size: 15px; margin-top: 2px; line-height: 1; }
+  .grid-day-title {
+    font-size: 10px;
+    line-height: 1.3;
+    margin-top: 4px;
+    font-weight: 600;
+    color: var(--texto);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  .grid-day-check {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 15px;
+    height: 15px;
+    accent-color: var(--azul);
+  }
+  .grid-day-stories { font-size: 9px; margin-top: auto; padding-top: 3px; opacity: 0.8; }
+
+  /* DAY MODAL */
+  .day-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,37,48,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  .day-modal {
+    background: var(--crema);
+    border-radius: 12px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 24px;
+  }
+  .day-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .day-modal-title { font-size: 18px; font-weight: 700; color: var(--azul); }
+  .day-modal-close { background: none; border: none; font-size: 22px; color: var(--texto-muted); cursor: pointer; padding: 4px 8px; }
+  .day-modal-post {
+    background: var(--blanco);
+    border-radius: 10px;
+    border: 0.5px solid var(--borde);
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .day-modal-post-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .day-modal-title2 { font-size: 14px; font-weight: 700; color: var(--texto); margin-bottom: 8px; }
+  .day-modal-slides { font-size: 12px; color: var(--grafito); line-height: 1.7; margin-bottom: 8px; }
+  .day-modal-caption { font-size: 12px; color: var(--grafito); line-height: 1.7; white-space: pre-wrap; background: var(--crema); padding: 10px; border-radius: 8px; }
+  .day-modal-hashtags { font-size: 11px; color: var(--azul); margin-top: 8px; font-weight: 600; }
+  .hashtag-count { font-size: 10px; color: var(--texto-muted); font-weight: 400; margin-left: 6px; }
+  .hashtag-count.over-limit { color: #c0392b; font-weight: 700; }
+  .day-modal-actions { display: flex; gap: 12px; margin-top: 10px; }
+  .btn-edit-post {
+    font-size: 12px; font-weight: 600; color: var(--azul); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline;
+  }
+  .edit-field-label { font-size: 11px; font-weight: 700; color: var(--texto-muted); margin: 8px 0 3px; text-transform: uppercase; }
+  .edit-textarea {
+    width: 100%; font-family: 'Inter', sans-serif; font-size: 12px; padding: 8px;
+    border: 1px solid var(--borde); border-radius: 6px; resize: vertical; color: var(--texto);
+  }
+  .btn-save-edit { margin-top: 10px; padding: 7px 14px; background: var(--azul); color: var(--blanco); border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .day-modal-stories { font-size: 12px; color: var(--grafito); background: #EEEDFE; border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; }
+
   /* SLOGANS */
   .slogan-category { margin-bottom: 32px; }
   .slogan-category-title {
@@ -528,6 +633,16 @@
     .mode-bar { padding: 0 20px 14px; }
     .container { padding: 24px 16px 60px; }
     .footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
+    .grid-dow-row, .grid-week-row { gap: 3px; }
+    .grid-day-cell { min-height: 62px; padding: 4px; }
+    .grid-day-num { font-size: 10px; }
+    .grid-day-icons { font-size: 11px; }
+    .grid-day-title { font-size: 8px; -webkit-line-clamp: 2; }
+    .grid-day-stories { font-size: 7px; }
+    .grid-day-check { width: 12px; height: 12px; top: 3px; right: 3px; }
+    .grid-dow-header { font-size: 9px; }
+    .phase-band { font-size: 10px; padding: 4px 8px; white-space: normal; }
+    .day-modal { padding: 16px; }
   }
 </style>
 </head>
@@ -655,67 +770,59 @@ const DEFAULT_DATA = {
       ]
     },
   ]},
-  agosto: { label: 'Agosto 2026', weeks: [
-    {
-      id: 'w14',
-      title: 'Semana 1 (1 al 7 de agosto) — "El problema que nadie nombra"',
-      posts: [
-        { id: 'a1', network: 'instagram', type: 'Placa', day: 'Lunes 03/08', pilar: 'Contexto PyME', title: 'La mayoría de las PyMEs manejan su plata "a ojo"', body: '', done: false },
-        { id: 'a2', network: 'linkedin', type: 'Post', day: 'Martes 04/08', pilar: 'Contexto PyME', title: 'El costo real de no saber cuánta plata vas a tener el mes que viene', body: '', done: false },
-        { id: 'a3', network: 'instagram', type: 'Stories', day: 'Miércoles 05/08', title: 'Pregunta a la audiencia: "¿sabés cuánta plata vas a tener en 30 días?"', body: '', done: false },
-        { id: 'a4', network: 'instagram', type: 'Carrusel', day: 'Jueves 06/08', pilar: 'Contexto PyME', title: 'Señales de que tu negocio necesita anticipar mejor su caja', body: '', done: false },
-        { id: 'a5', network: 'linkedin', type: 'Post', day: 'Viernes 07/08', pilar: 'Contexto PyME', title: 'Por qué la gestión financiera de una PyME no es la de una multinacional', body: '', done: false }
-      ]
-    },
-    {
-      id: 'w15',
-      title: 'Semana 2 (8 al 14 de agosto) — "Algo está por cambiar"',
-      posts: [
-        { id: 'a6', network: 'instagram', type: 'Placa', day: 'Lunes 10/08', pilar: 'Bocha (teaser)', title: 'Algo se está por venir — sin nombrar el producto', body: '', done: false },
-        { id: 'a7', network: 'linkedin', type: 'Post', day: 'Martes 11/08', pilar: 'Contexto PyME', title: 'Datos reales sobre financiamiento y supervivencia de PyMEs argentinas', body: '', done: false },
-        { id: 'a8', network: 'instagram', type: 'Stories', day: 'Miércoles 12/08', title: 'Encuesta: "¿qué es lo que más te cuesta de gestionar la plata del negocio?"', body: '', done: false },
-        { id: 'a9', network: 'instagram', type: 'Carrusel', day: 'Jueves 13/08', pilar: 'Bocha (teaser)', title: 'Un asistente que te ayuda a anticipar, no a explicarte lo que ya pasó', body: '', done: false },
-        { id: 'a10', network: 'linkedin', type: 'Post', day: 'Viernes 14/08', pilar: 'Contexto PyME', title: 'La brecha real entre una PyME y una multinacional en planificación financiera', body: '', done: false }
-      ]
-    },
-    {
-      id: 'w16',
-      title: 'Semana 3 (15 al 21 de agosto) — "Lanzamiento"',
-      posts: [
-        { id: 'a11', network: 'instagram', type: 'Placa', day: 'Lunes 17/08', par: true, pilar: 'Lanzamiento', title: 'Countdown: "Mañana se termina la espera"', body: '', done: false },
-        { id: 'a12', network: 'linkedin', type: 'Post', day: 'Lunes 17/08', par: true, pilar: 'Lanzamiento', title: 'Countdown: "Mañana se termina la espera"', body: '', done: false },
-        { id: 'a13', network: 'instagram', type: 'Carrusel', day: 'Martes 18/08', par: true, pilar: 'Lanzamiento', title: '"Ya está. VIERNES llegó." — reveal del producto + oferta 90% off / cupo 30', body: '', done: false },
-        { id: 'a14', network: 'linkedin', type: 'Post oficial', day: 'Martes 18/08', par: true, pilar: 'Lanzamiento', title: '"Ya está. VIERNES llegó." — reveal del producto + oferta 90% off / cupo 30', body: '', done: false },
-        { id: 'a15', network: 'instagram', type: 'Stories', day: 'Miércoles 19/08', title: 'Preguntas y respuestas en vivo sobre la oferta', body: '', done: false },
-        { id: 'a16', network: 'instagram', type: 'Carrusel', day: 'Jueves 20/08', pilar: 'Característica', title: 'Cómo funciona VIERNES — paso a paso, sin jerga', body: '', done: false },
-        { id: 'a17', network: 'linkedin', type: 'Post', day: 'Viernes 21/08', pilar: 'Lanzamiento', title: 'Por qué creamos VIERNES — historia y propósito (voz de marca)', body: '', done: false }
-      ]
-    },
-    {
-      id: 'w17',
-      title: 'Semana 4 (22 al 28 de agosto) — "Bocha y refuerzo de oferta"',
-      posts: [
-        { id: 'a18', network: 'instagram', type: 'Carrusel', day: 'Lunes 24/08', pilar: 'Bocha', title: 'Presentación de Bocha — el asistente en acción', body: '', done: false },
-        { id: 'a19', network: 'linkedin', type: 'Post', day: 'Martes 25/08', pilar: 'Característica', title: 'Qué resuelve VIERNES que ninguna planilla resuelve', body: '', done: false },
-        { id: 'a20', network: 'instagram', type: 'Stories', day: 'Miércoles 26/08', title: 'Simulación de consulta real a Bocha', body: '', done: false },
-        { id: 'a21', network: 'instagram', type: 'Placa', day: 'Jueves 27/08', pilar: 'Lanzamiento', title: '"Quedan X lugares con 90% off" — urgencia de cupo', body: '', done: false },
-        { id: 'a22', network: 'linkedin', type: 'Post', day: 'Viernes 28/08', pilar: 'Contexto PyME', title: 'Cierre de mes: qué aprendimos en la primera semana de VIERNES en vivo', body: '', done: false }
-      ]
-    },
-    {
-      id: 'w18',
-      title: 'Semana 5 (29 al 31 de agosto) — "Social proof"',
-      posts: [
-        { id: 'a23', network: 'instagram', type: 'Placa', day: 'Lunes 31/08', par: true, pilar: 'Lanzamiento', title: 'Primeros usuarios usando VIERNES — social proof inicial', body: '', done: false },
-        { id: 'a24', network: 'linkedin', type: 'Post', day: 'Lunes 31/08', par: true, pilar: 'Lanzamiento', title: 'Primeros usuarios usando VIERNES — social proof inicial', body: '', done: false }
-      ]
-    }
-  ],
-  adMaterial: [
-    { id: 'ad1', title: 'Anuncio principal — versión corta (Meta Ads / Reel)', body: 'Título: Dejá de adivinar si te va a alcanzar.\n\nCuerpo: VIERNES te muestra cómo va a estar tu caja las próximas semanas. Simple, claro, sin ser experto en finanzas. Primer mes con 90% off.\n\nCTA: Probá VIERNES → soyviernes.com' },
-    { id: 'ad2', title: 'Anuncio secundario — capacidades (carrusel pago)', body: 'Título: Todo lo que tu negocio necesita para no perder el control de la plata.\n\n💰 Visualizá tu caja\n📈 Anticipá lo que viene\n🚨 Enterate antes de cada vencimiento\n📊 Entendé tus números reales\n🤖 Consultá con Bocha cuando quieras\n\nCTA: Empezá con 90% off → soyviernes.com' },
-    { id: 'ad3', title: 'Frase integral para landing / slide', body: 'Titular: La claridad que tu negocio necesita.\n\nBajada: Visualizá tu caja. Anticipá problemas. Planificá los próximos meses. Priorizá pagos. Todo en un solo lugar, sin ser experto en finanzas.' }
-  ] }
+  agosto: {
+    label: 'Agosto 2026',
+    viewType: 'grid',
+    phases: [
+      { start: 1, end: 7, name: 'Reactivación' },
+      { start: 8, end: 14, name: 'Las capacidades' },
+      { start: 15, end: 18, name: 'Cuenta regresiva + Lanzamiento' },
+      { start: 19, end: 31, name: 'Post-lanzamiento' }
+    ],
+    posts: [
+      { id: 'g1', date: 3, network: 'instagram', format: 'Carrusel', pilar: 'educacion', pairId: 'd3', title: 'Arranca el mes', slides: ['Arranca el mes. Y con él, la misma pregunta de siempre.', '¿Me va a alcanzar para pagar todo?', 'Los sueldos. Los proveedores. El alquiler. Los impuestos. Todo se acomoda en el mismo puñado de días.', 'Y vos hacés lo que podés: mirás el banco, revisás la planilla, sacás cuentas de memoria.', 'Pero entre lo que tenés hoy y lo que va a entrar, hay una zona gris. Y esa zona gris es la que te quita el sueño.', 'Empezar el mes no debería ser adivinar si llegás. Debería ser saber, con tiempo, cómo lo vas a cerrar. VIERNES.'], caption: 'Primeros días del mes. Y otra vez la misma pregunta: ¿me va a alcanzar para pagar todo? Los sueldos, los proveedores, el alquiler, los impuestos. Todo cae junto. Y entre lo que tenés hoy y lo que esperás que entre, hay una zona gris que te mantiene despierto. Arrancar el mes no debería ser adivinar si llegás. ¿Vos cómo arrancás el mes: con la cuenta clara o sacando números de memoria?', hashtags: ['#pymesargentinas', '#dueñodenegocio', '#gestiónpyme', '#flujodecaja', '#finanzasparapymes'], done: false },
+      { id: 'g2', date: 3, network: 'linkedin', format: 'Post', pilar: 'educacion', pairId: 'd3', title: 'Arranca el mes (versión LinkedIn)', caption: 'Los primeros días del mes son, para muchos dueños de pyme, los más tensos. Es cuando se acomodan casi todos los compromisos: sueldos, proveedores, alquiler, impuestos. Todo en el mismo puñado de días. Y la pregunta de fondo siempre es la misma: ¿va a alcanzar? La mayoría la responde mirando el saldo del banco. Pero el saldo de hoy no dice nada sobre lo que va a entrar y salir las próximas semanas. Entre lo que hay y lo que se espera, existe una zona gris. Y en esa zona gris es donde se toman —o se postergan— las decisiones más importantes del negocio. Arrancar el mes no debería ser adivinar si se llega. Debería ser saber, con anticipación, cómo se va a cerrar. ¿Lo estás viendo en tu empresa?', hashtags: ['#pymes', '#finanzas', '#gestión', '#emprendedores'], done: false },
+      { id: 'g3', date: 5, network: 'linkedin', format: 'Carrusel', pilar: 'actualidad', pairId: 'd5', title: 'Financiarse para crecer o sobrevivir', slides: ['Bajaron las tasas de financiamiento pyme. Buena noticia, en principio.', 'La mayoría no toma ese crédito para crecer. Lo toma para sostener el día a día.', 'La morosidad en créditos pyme es varias veces más alta que en las grandes. No es falta de voluntad de pago. Es falta de previsibilidad.', 'Cuando no sabés qué vas a cobrar la semana que viene, salís a buscar plata cuando el bache ya apareció.', 'Cuando lo ves venir, planificás en lugar de apagar incendios.', 'La diferencia casi nunca está en la tasa. Está en si lo viste venir a tiempo.'], caption: 'Bajaron las tasas de financiamiento pyme. Buena noticia, en principio. Pero la mayoría no está tomando ese crédito para crecer. Lo está tomando para sostener el día a día. La diferencia entre financiarse para sobrevivir y para crecer casi nunca está en la tasa. Está en si lo viste venir a tiempo. ¿Lo estás viendo en tu empresa?', hashtags: ['#pymes', '#finanzas', '#gestión', '#emprendedores'], done: false },
+      { id: 'g4', date: 5, network: 'instagram', format: 'Carrusel', pilar: 'actualidad', pairId: 'd5', title: 'Financiarse para crecer o sobrevivir (IG)', slides: ['Bajaron las tasas de financiamiento pyme. Buena noticia, en principio.', 'La mayoría no toma ese crédito para crecer. Lo toma para sostener el día a día.', 'La morosidad en créditos pyme es varias veces más alta que en las grandes. No es falta de voluntad de pago. Es falta de previsibilidad.', 'Cuando no sabés qué vas a cobrar la semana que viene, salís a buscar plata cuando el bache ya apareció.', 'Cuando lo ves venir, planificás en lugar de apagar incendios.', 'La diferencia casi nunca está en la tasa. Está en si lo viste venir a tiempo.'], caption: 'Bajaron las tasas, pero la mayoría de las pymes no toma crédito para crecer. Lo toma para llegar a fin de mes. La diferencia entre financiarte para sobrevivir o para crecer no está en la tasa. Está en si lo viste venir a tiempo.', hashtags: ['#pymesargentinas', '#dueñodenegocio', '#gestiónpyme', '#finanzasparapymes', '#negocios'], done: false },
+      { id: 'g5', date: 7, network: 'instagram', format: 'Placa', pilar: 'educacion', title: 'El costo de operar a ciegas', placaText: 'Lo más caro de un negocio no es lo que gastás. Es lo que no ves venir.', caption: 'Un pago que se te juntó con otro. Un cliente que se atrasó justo esa semana. Un impuesto que no tenías en el radar. Ninguno de esos te avisa. Y lo que no ves venir siempre sale más caro.', hashtags: ['#pymesargentinas', '#dueñodenegocio', '#gestiónpyme', '#finanzasparapymes', '#emprendedoresargentinos'], done: false },
+      { id: 'g6', date: 9, network: 'instagram', format: 'Placa', pilar: 'viernes', title: 'Ritual del viernes', placaText: 'Cerrá la semana sabiendo cómo empezás la próxima.', caption: 'La mayoría llega al finde agotado y sin saber cómo arranca el lunes. ¿Y si supieras exactamente cómo venís antes de desconectar? Pronto te vamos a mostrar cómo.', hashtags: ['#pymesargentinas', '#dueñodenegocio', '#gestiónpyme', '#finanzasparapymes', '#emprendedoresargentinos'], done: false },
+      { id: 'g7', date: 11, network: 'instagram', format: 'Carrusel', pilar: 'viernes', pairId: 'd11', title: 'Visualizá tu caja', slides: ['Mirás el saldo del banco y creés que esa es tu caja.', 'Pero el saldo de hoy no te dice si vas a llegar a fin de mes.', 'Tu caja no es un número. Es una película: lo que entró, lo que va a entrar, lo que tenés que pagar.', 'Cuando la ves completa, dejás de tener sorpresas.', 'Visualizá tu caja de un vistazo. Así de simple. VIERNES.'], caption: 'El saldo del banco es una foto. Tu caja es una película. La diferencia entre una y otra es lo que te agarra desprevenido a fin de mes.', hashtags: ['#pymesargentinas', '#dueñodenegocio', '#flujodecaja', '#gestiónpyme', '#finanzasparapymes'], done: false },
+      { id: 'g8', date: 11, network: 'linkedin', format: 'Post', pilar: 'viernes', pairId: 'd11', title: 'Visualizá tu caja (LinkedIn)', caption: 'La mayoría de los dueños mira el saldo del banco y cree que eso es su caja. Pero el saldo de hoy es una foto. No dice nada sobre lo que va a entrar y salir las próximas semanas. Tu caja no es un número. Es el flujo completo: lo que entró, lo que está por entrar, lo que tenés que pagar. Cuando lo ves completo, dejás de tener sorpresas a fin de mes.', hashtags: ['#pymes', '#finanzas', '#gestión', '#emprendedores'], done: false },
+      { id: 'g9', date: 13, network: 'instagram', format: 'Placa', pilar: 'viernes', title: 'Anticipá lo que viene', placaText: '¿Y si supieras hoy cómo va a estar tu caja en 3 semanas?', caption: 'No es adivinar. Es proyectar. Ver los pagos antes de que se junten. Llegar preparado en vez de corriendo de atrás. Anticipá lo que viene.', hashtags: ['#pymesargentinas', '#dueñodenegocio', '#gestiónpyme', '#finanzasparapymes', '#proyecciones'], done: false },
+      { id: 'g10', date: 14, network: 'instagram', format: 'Carrusel', pilar: 'bocha', pairId: 'd14', title: 'Enterate antes + Bocha', slides: ['El problema no es la falta de plata.', 'Es que los pagos se juntan sin que los veas venir.', 'Los sueldos. Un impuesto. Un proveedor. Todo la misma semana.', 'VIERNES te avisa antes de que pase.', 'Y si tenés una duda, un asistente te la explica en tu idioma. Enterate a tiempo. Decidí con calma.'], caption: 'Nadie quiere que lo agarre desprevenido un pago grande. Lo peor no es pagar, es no verlo venir. VIERNES te avisa con tiempo. Y si necesitás entender algo, te lo explica sin tecnicismos.', hashtags: ['#pymesargentinas', '#dueñodenegocio', '#gestiónpyme', '#vencimientos', '#finanzasparapymes'], done: false },
+      { id: 'g11', date: 14, network: 'linkedin', format: 'Post', pilar: 'bocha', pairId: 'd14', title: 'Enterate antes + Bocha (LinkedIn)', caption: 'El problema de fondo casi nunca es la falta de plata. Es que los compromisos se acumulan sin que se vean venir. Sueldos, un impuesto, un proveedor, todo en la misma semana. Cuando se detecta, ya es tarde para reaccionar con margen. Anticipar esos momentos —y poder consultar qué hacer cuando aparecen— cambia por completo la forma de decidir.', hashtags: ['#pymes', '#finanzas', '#gestión', '#emprendedores'], done: false },
+      { id: 'g12', date: 15, network: 'instagram', format: 'Placa', pilar: 'viernes', pairId: 'd15', title: 'Teaser "El martes"', placaText: 'El martes lo vas a poder usar.', caption: 'Estas semanas hablamos del problema. El martes te mostramos la solución. VIERNES llega para que dejes de adivinar con la plata de tu negocio. Quedáte cerca.', hashtags: ['#pymesargentinas', '#dueñodenegocio', '#gestiónpyme', '#finanzasparapymes', '#lanzamiento'], done: false },
+      { id: 'g13', date: 15, network: 'linkedin', format: 'Post', pilar: 'viernes', pairId: 'd15', title: 'Teaser "El martes" (LinkedIn)', caption: 'Estas semanas hablamos del problema. El martes te mostramos la solución. VIERNES llega para que dejes de adivinar con la plata de tu negocio. Quedáte cerca.', hashtags: ['#pymesargentinas', '#dueñodenegocio', '#gestiónpyme', '#finanzasparapymes', '#lanzamiento'], done: false },
+      { id: 'g14', date: 17, network: 'instagram', format: 'Placa', pilar: 'viernes', title: 'Countdown "Mañana"', placaText: 'Mañana.', caption: 'Mañana VIERNES está disponible. Y los primeros que se sumen tienen algo especial. Preparate.', hashtags: ['#pymesargentinas', '#dueñodenegocio', '#gestiónpyme', '#finanzasparapymes', '#lanzamiento'], done: false },
+      { id: 'g15', date: 18, network: 'instagram', format: 'Carrusel', pilar: 'lanzamiento', pairId: 'd18', title: 'LANZAMIENTO', slides: ['Ya está. VIERNES se puede usar.', 'La forma más simple de saber cómo va a estar tu caja, antes de que pase.', 'Visualizá tu caja. Anticipá lo que viene. Enterate antes de cada pago.', 'Con un asistente que te explica todo en tu idioma.', 'Y arranca en beta: los primeros 30 usuarios, gratis.', 'Entrá a soyviernes.com.ar. Empezá hoy.'], caption: 'Llegó el día. VIERNES ya está disponible para todos los que gestionan un negocio y están cansados de adivinar con la plata. Los primeros 30 usuarios lo prueban gratis. Entrá desde el celular o la compu, sin instalar nada. El link está en la bio.', hashtags: ['#viernes', '#lanzamiento', '#pymesargentinas', '#dueñodenegocio', '#finanzasparapymes'], done: false },
+      { id: 'g16', date: 18, network: 'linkedin', format: 'Post', pilar: 'lanzamiento', pairId: 'd18', title: 'LANZAMIENTO (LinkedIn)', caption: 'Hoy VIERNES está disponible. Una forma simple de que cualquier pyme pueda ver, anticipar y planificar su caja sin ser experta en finanzas. Durante años, la proyección financiera fue solo para grandes empresas. Hoy dejó de serlo. Los primeros 30 usuarios acceden gratis. soyviernes.com.ar', hashtags: ['#viernes', '#lanzamiento', '#pymes', '#finanzas', '#tecnología'], done: false },
+      { id: 'g17', date: 20, network: 'instagram', format: 'Carrusel', pilar: 'viernes', pairId: 'd20', title: 'Cómo empezar en 3 pasos', slides: ['¿Ya entraste a VIERNES? Empezar es más fácil de lo que pensás.', 'Paso 1: Entrá a soyviernes.com.ar desde el celular o la compu. Sin instalar nada.', 'Paso 2: Cargá lo que entra y lo que sale. Te guiamos en cada paso.', 'Paso 3: Mirá cómo va a estar tu caja las próximas semanas. Así de simple.', 'Y si te trabás, escribinos. Estamos para ayudarte. VIERNES.'], caption: 'Empezar con VIERNES te lleva menos de lo que pensás. Entrás, cargás tus movimientos y ya ves cómo viene tu caja. Y si en algún momento te perdés, escribinos. En esta etapa te acompañamos en todo.', hashtags: ['#viernes', '#pymesargentinas', '#dueñodenegocio', '#finanzasparapymes', '#gestiónpyme'], done: false },
+      { id: 'g18', date: 20, network: 'linkedin', format: 'Post', pilar: 'viernes', pairId: 'd20', title: 'Cómo empezar en 3 pasos (LinkedIn)', slides: ['¿Ya entraste a VIERNES? Empezar es más fácil de lo que pensás.', 'Paso 1: Entrá a soyviernes.com.ar desde el celular o la compu. Sin instalar nada.', 'Paso 2: Cargá lo que entra y lo que sale. Te guiamos en cada paso.', 'Paso 3: Mirá cómo va a estar tu caja las próximas semanas. Así de simple.', 'Y si te trabás, escribinos. Estamos para ayudarte. VIERNES.'], caption: 'Empezar con VIERNES te lleva menos de lo que pensás. Entrás, cargás tus movimientos y ya ves cómo viene tu caja. Y si en algún momento te perdés, escribinos. En esta etapa te acompañamos en todo.', hashtags: ['#viernes', '#pymesargentinas', '#dueñodenegocio', '#finanzasparapymes', '#gestiónpyme'], done: false },
+      { id: 'g19', date: 22, network: 'instagram', format: 'Placa', pilar: 'bocha', title: 'Presentamos a Bocha', placaText: 'Ahora tenés un asesor financiero disponible las 24 horas.', caption: 'Se llama Bocha. Te explica tus números en tu idioma, sin tecnicismos. Te avisa lo que se viene y te ayuda a decidir. Como tener un experto al lado, siempre.', hashtags: ['#viernes', '#pymesargentinas', '#dueñodenegocio', '#finanzasparapymes', '#tecnología'], done: false },
+      { id: 'g20', date: 25, network: 'instagram', format: 'Carrusel', pilar: 'historias', pairId: 'd25', title: 'Lo que sorprende a los usuarios', slides: ['Lo que más sorprende a los que ya están usando VIERNES.', '"No sabía que podía ver mi caja con tantas semanas de anticipación."', '"Me di cuenta de pagos que se me venían juntando y no los había visto."', '"Es más simple de lo que esperaba. No hace falta saber de finanzas."', '¿Y vos? Todavía estás a tiempo de probarlo. VIERNES.'], caption: 'En los primeros días, lo que más nos dicen los que probaron VIERNES es que es más simple de lo que esperaban. Y que ver la caja a futuro les cambió la forma de planificar.', hashtags: ['#viernes', '#pymesargentinas', '#dueñodenegocio', '#finanzasparapymes', '#gestiónpyme'], done: false },
+      { id: 'g21', date: 25, network: 'linkedin', format: 'Post', pilar: 'historias', pairId: 'd25', title: 'Lo que sorprende a los usuarios (LinkedIn)', slides: ['Lo que más sorprende a los que ya están usando VIERNES.', '"No sabía que podía ver mi caja con tantas semanas de anticipación."', '"Me di cuenta de pagos que se me venían juntando y no los había visto."', '"Es más simple de lo que esperaba. No hace falta saber de finanzas."', '¿Y vos? Todavía estás a tiempo de probarlo. VIERNES.'], caption: 'En los primeros días, lo que más nos dicen los que probaron VIERNES es que es más simple de lo que esperaban. Y que ver la caja a futuro les cambió la forma de planificar.', hashtags: ['#viernes', '#pymesargentinas', '#dueñodenegocio', '#finanzasparapymes', '#gestiónpyme'], done: false },
+      { id: 'g22', date: 27, network: 'instagram', format: 'Placa', pilar: 'viernes', title: 'Visualizá tu caja en uso', placaText: 'Tu caja de las próximas semanas, de un vistazo.', caption: 'Así de simple se ve tu situación en VIERNES. Lo que entra, lo que sale, y cómo vas a estar. Sin planillas, sin cuentas de memoria.', hashtags: ['#viernes', '#pymesargentinas', '#flujodecaja', '#dueñodenegocio', '#finanzasparapymes'], done: false },
+      { id: 'g23', date: 29, network: 'instagram', format: 'Placa', pilar: 'bocha', title: 'Un consejo de Bocha', placaText: '"Revisá tu caja un viernes, no un lunes. Empezás la semana sabiendo, no adivinando." — Bocha', caption: 'Los mejores consejos financieros, en tu idioma. Ese es Bocha, tu asistente en VIERNES.', hashtags: ['#viernes', '#pymesargentinas', '#dueñodenegocio', '#finanzasparapymes', '#gestiónpyme'], done: false }
+    ],
+    stories: [
+      { id: 'gs1', date: 3, title: 'Encuesta: "¿Cómo arrancás el mes?"', done: false },
+      { id: 'gs2', date: 5, title: 'Pregunta abierta a la audiencia', done: false },
+      { id: 'gs3', date: 7, title: 'Frase del día', done: false },
+      { id: 'gs4', date: 10, title: 'Teaser de la app (sin nombrar el producto)', done: false },
+      { id: 'gs5', date: 12, title: 'Encuesta sobre gestión de la plata', done: false },
+      { id: 'gs6', date: 14, title: 'Countdown', done: false },
+      { id: 'gs7', date: 15, title: 'Countdown al lanzamiento', done: false },
+      { id: 'gs8', date: 17, title: '"Mañana" + isotipo completo', done: false },
+      { id: 'gs9', date: 19, title: 'Demo rápida', done: false },
+      { id: 'gs10', date: 21, title: 'Testimonio', done: false },
+      { id: 'gs11', date: 30, title: 'Recordatorio', done: false }
+    ],
+    adMaterial: [
+      { id: 'ad1', title: 'Anuncio principal — versión corta (Meta Ads / Reel)', body: 'Título: Dejá de adivinar si te va a alcanzar.\n\nCuerpo: VIERNES te muestra cómo va a estar tu caja las próximas semanas. Simple, claro, sin ser experto en finanzas. Primer mes con 90% off.\n\nCTA: Probá VIERNES → soyviernes.com' },
+      { id: 'ad2', title: 'Anuncio secundario — capacidades (carrusel pago)', body: 'Título: Todo lo que tu negocio necesita para no perder el control de la plata.\n\n💰 Visualizá tu caja\n📈 Anticipá lo que viene\n🚨 Enterate antes de cada vencimiento\n📊 Entendé tus números reales\n🤖 Consultá con Bocha cuando quieras\n\nCTA: Empezá con 90% off → soyviernes.com' },
+      { id: 'ad3', title: 'Frase integral para landing / slide', body: 'Titular: La claridad que tu negocio necesita.\n\nBajada: Visualizá tu caja. Anticipá problemas. Planificá los próximos meses. Priorizá pagos. Todo en un solo lugar, sin ser experto en finanzas.' }
+    ]
+  }
 };
 
 const DEFAULT_SLOGANS = [
@@ -873,14 +980,27 @@ let expandedPosts = new Set();
 
 function allWeeks() {
   let weeks = [];
-  Object.keys(data).forEach(key => { weeks = weeks.concat(data[key].weeks); });
+  Object.keys(data).forEach(key => { if (data[key].weeks) weeks = weeks.concat(data[key].weeks); });
   return weeks;
 }
 
+function allFlatPosts() {
+  let posts = [];
+  Object.keys(data).forEach(key => { if (data[key].posts) posts = posts.concat(data[key].posts); });
+  return posts;
+}
+
+function allDonablePosts() {
+  let all = [];
+  allWeeks().forEach(w => { all = all.concat(w.posts); });
+  all = all.concat(allFlatPosts());
+  return all;
+}
+
 function applyDoneMap(doneMap) {
-  allWeeks().forEach(w => w.posts.forEach(p => {
+  allDonablePosts().forEach(p => {
     if (Object.prototype.hasOwnProperty.call(doneMap, p.id)) p.done = doneMap[p.id];
-  }));
+  });
 }
 
 function getLocalDoneMap() {
@@ -890,8 +1010,12 @@ function getLocalDoneMap() {
     const savedData = JSON.parse(saved);
     const doneMap = {};
     Object.keys(savedData).forEach(key => {
-      if (!savedData[key] || !savedData[key].weeks) return;
-      savedData[key].weeks.forEach(w => w.posts.forEach(p => { doneMap[p.id] = p.done; }));
+      if (savedData[key] && savedData[key].weeks) {
+        savedData[key].weeks.forEach(w => w.posts.forEach(p => { doneMap[p.id] = p.done; }));
+      }
+      if (savedData[key] && savedData[key].posts) {
+        savedData[key].posts.forEach(p => { doneMap[p.id] = p.done; });
+      }
     });
     return doneMap;
   } catch(e) { return {}; }
@@ -947,7 +1071,13 @@ function setMode(mode) {
 
 function countProgress() {
   let total = 0, done = 0;
-  data[currentMonthKey].weeks.forEach(w => w.posts.forEach(p => { total++; if (p.done) done++; }));
+  const month = data[currentMonthKey];
+  if (month.weeks) {
+    month.weeks.forEach(w => w.posts.forEach(p => { total++; if (p.done) done++; }));
+  }
+  if (month.posts) {
+    month.posts.forEach(p => { total++; if (p.done) done++; });
+  }
   return { total, done };
 }
 
@@ -980,19 +1110,43 @@ function findPost(pid) {
     const p = w.posts.find(x => x.id === pid);
     if (p) return p;
   }
+  const flat = allFlatPosts().find(x => x.id === pid);
+  if (flat) return flat;
   for (const key of Object.keys(data)) {
     if (data[key].adMaterial) {
       const ad = data[key].adMaterial.find(x => x.id === pid);
       if (ad) return ad;
     }
+    if (data[key].stories) {
+      const st = data[key].stories.find(x => x.id === pid);
+      if (st) return st;
+    }
   }
   return null;
+}
+
+function postFullText(post) {
+  if (post.body) return post.body;
+  let parts = [];
+  if (post.slides && post.slides.length) {
+    parts.push('Slides:\n' + post.slides.map((s,i) => (i+1) + '. ' + s).join('\n'));
+  }
+  if (post.placaText) {
+    parts.push('Texto de placa: ' + post.placaText);
+  }
+  if (post.caption) {
+    parts.push('Caption: ' + post.caption);
+  }
+  if (post.hashtags && post.hashtags.length) {
+    parts.push(post.hashtags.join(' '));
+  }
+  return parts.length ? parts.join('\n\n') : post.title;
 }
 
 function copyBody(pid, btn) {
   const post = findPost(pid);
   if (!post) return;
-  const text = post.body || post.title;
+  const text = postFullText(post);
   const done = () => {
     if (!btn) return;
     const original = btn.dataset.label;
@@ -1065,8 +1219,408 @@ window.deleteWeek = deleteWeek;
 window.addWeek = addWeek;
 window.exportData = exportData;
 
+/* ===== GRID VIEW (agosto) ===== */
+
+const PILAR_ICON = {
+  educacion: '🎓',
+  viernes: 'V',
+  bocha: '🤖',
+  actualidad: '📰',
+  historias: '👥',
+  lanzamiento: '🚀'
+};
+
+let currentModalDate = null;
+let editingPostId = null;
+
+function getPostsForDate(monthKey, dateNum) {
+  const month = data[monthKey];
+  if (!month.posts) return [];
+  return month.posts.filter(p => p.date === dateNum);
+}
+
+function getStoriesForDate(monthKey, dateNum) {
+  const month = data[monthKey];
+  if (!month.stories) return [];
+  return month.stories.filter(s => s.date === dateNum);
+}
+
+function isDayDone(monthKey, dateNum) {
+  const posts = getPostsForDate(monthKey, dateNum);
+  if (!posts.length) return false;
+  return posts.every(p => p.done);
+}
+
+function toggleDayDone(dateNum) {
+  if (currentMode !== 'editor') return;
+  const posts = getPostsForDate(currentMonthKey, dateNum);
+  const newState = !isDayDone(currentMonthKey, dateNum);
+  posts.forEach(p => {
+    p.done = newState;
+    pushDoneToServer(p.id, newState);
+  });
+  saveToStorage();
+  render();
+}
+
+function phaseForDate(monthKey, dateNum) {
+  const phases = data[monthKey].phases || [];
+  return phases.find(ph => dateNum >= ph.start && dateNum <= ph.end);
+}
+
+function getEditOverrides() {
+  try {
+    const saved = localStorage.getItem('viernes-agosto-edits');
+    return saved ? JSON.parse(saved) : {};
+  } catch(e) { return {}; }
+}
+
+function saveEditOverride(pid, fields) {
+  const overrides = getEditOverrides();
+  overrides[pid] = Object.assign({}, overrides[pid], fields);
+  try { localStorage.setItem('viernes-agosto-edits', JSON.stringify(overrides)); } catch(e) {}
+}
+
+function applyEditOverrides() {
+  const overrides = getEditOverrides();
+  Object.keys(overrides).forEach(pid => {
+    const post = findPost(pid);
+    if (post) Object.assign(post, overrides[pid]);
+  });
+}
+
+function renderAgostoGrid() {
+  const root = document.getElementById('weeks-root');
+  root.innerHTML = '';
+  const monthKey = currentMonthKey;
+
+  const dowNames = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const dowRow = document.createElement('div');
+  dowRow.className = 'grid-dow-row';
+  dowNames.forEach(dName => {
+    const el = document.createElement('div');
+    el.className = 'grid-dow-header';
+    el.textContent = dName;
+    dowRow.appendChild(el);
+  });
+  root.appendChild(dowRow);
+
+  const year = 2026, monthIndex = 7; // Agosto
+  const firstDay = new Date(year, monthIndex, 1);
+  const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+  const startDow = firstDay.getDay();
+
+  let cells = [];
+  for (let i = 0; i < startDow; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  let lastPhaseKey = null;
+
+  for (let row = 0; row < cells.length / 7; row++) {
+    const rowCells = cells.slice(row * 7, row * 7 + 7);
+
+    const phasesInRow = [];
+    rowCells.forEach(d => {
+      if (d) {
+        const ph = phaseForDate(monthKey, d);
+        if (ph && phasesInRow.indexOf(ph.name) === -1) phasesInRow.push(ph.name);
+      }
+    });
+    const phaseKey = phasesInRow.join('|');
+    if (phaseKey && phaseKey !== lastPhaseKey) {
+      const band = document.createElement('div');
+      band.className = 'phase-band';
+      band.textContent = phasesInRow.join('  +  ');
+      root.appendChild(band);
+      lastPhaseKey = phaseKey;
+    }
+
+    const weekRow = document.createElement('div');
+    weekRow.className = 'grid-week-row';
+
+    rowCells.forEach(d => {
+      const cell = document.createElement('div');
+      if (!d) {
+        cell.className = 'grid-day-cell empty-day';
+        weekRow.appendChild(cell);
+        return;
+      }
+      const posts = getPostsForDate(monthKey, d);
+      const stories = getStoriesForDate(monthKey, d);
+      const networks = [];
+      posts.forEach(p => { if (networks.indexOf(p.network) === -1) networks.push(p.network); });
+      let netClass = '';
+      if (networks.length === 1) netClass = 'net-' + networks[0];
+      else if (networks.length > 1) netClass = 'net-split';
+
+      const dayDone = isDayDone(monthKey, d);
+      cell.className = 'grid-day-cell' + (posts.length ? ' has-post ' + netClass : '') + (dayDone ? ' day-done' : '');
+      cell.onclick = function() { openDayModal(d); };
+
+      const iconsSeen = [];
+      posts.forEach(p => { const ic = PILAR_ICON[p.pilar]; if (ic && iconsSeen.indexOf(ic) === -1) iconsSeen.push(ic); });
+
+      const numEl = document.createElement('span');
+      numEl.className = 'grid-day-num';
+      numEl.textContent = d;
+      cell.appendChild(numEl);
+
+      if (posts.length) {
+        const check = document.createElement('input');
+        check.type = 'checkbox';
+        check.className = 'grid-day-check' + (currentMode !== 'editor' ? ' readonly' : '');
+        check.checked = dayDone;
+        check.onclick = function(e) { e.stopPropagation(); toggleDayDone(d); };
+        cell.appendChild(check);
+      }
+
+      if (iconsSeen.length) {
+        const iconsEl = document.createElement('div');
+        iconsEl.className = 'grid-day-icons';
+        iconsEl.textContent = iconsSeen.join(' ');
+        cell.appendChild(iconsEl);
+      }
+
+      if (posts.length) {
+        const titleEl = document.createElement('div');
+        titleEl.className = 'grid-day-title';
+        titleEl.textContent = posts[0].title;
+        cell.appendChild(titleEl);
+      }
+
+      if (stories.length) {
+        const stEl = document.createElement('div');
+        stEl.className = 'grid-day-stories';
+        stEl.textContent = '📱 ' + stories.length + ' stor' + (stories.length > 1 ? 'ies' : 'y');
+        cell.appendChild(stEl);
+      }
+
+      weekRow.appendChild(cell);
+    });
+
+    root.appendChild(weekRow);
+  }
+}
+
+function openDayModal(dateNum) {
+  currentModalDate = dateNum;
+  editingPostId = null;
+  renderDayModal();
+}
+
+function closeDayModal() {
+  currentModalDate = null;
+  editingPostId = null;
+  const existing = document.getElementById('day-modal-overlay');
+  if (existing) existing.remove();
+}
+
+function renderDayModal() {
+  let overlay = document.getElementById('day-modal-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'day-modal-overlay';
+    overlay.className = 'day-modal-overlay';
+    overlay.onclick = function(e) { if (e.target === overlay) closeDayModal(); };
+    document.body.appendChild(overlay);
+  }
+
+  const d = currentModalDate;
+  const posts = getPostsForDate(currentMonthKey, d);
+  const stories = getStoriesForDate(currentMonthKey, d);
+  const monthLabel = data[currentMonthKey].label;
+
+  const modal = document.createElement('div');
+  modal.className = 'day-modal';
+
+  const header = document.createElement('div');
+  header.className = 'day-modal-header';
+  const titleDiv = document.createElement('div');
+  titleDiv.className = 'day-modal-title';
+  titleDiv.textContent = d + ' de ' + monthLabel;
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'day-modal-close';
+  closeBtn.textContent = '×';
+  closeBtn.onclick = closeDayModal;
+  header.appendChild(titleDiv);
+  header.appendChild(closeBtn);
+  modal.appendChild(header);
+
+  if (stories.length) {
+    const st = document.createElement('div');
+    st.className = 'day-modal-stories';
+    const strong = document.createElement('strong');
+    strong.textContent = '📱 Stories: ';
+    st.appendChild(strong);
+    st.appendChild(document.createTextNode(stories.map(s => s.title).join(' · ')));
+    modal.appendChild(st);
+  }
+
+  if (!posts.length) {
+    const p = document.createElement('p');
+    p.style.cssText = 'font-size:13px;color:var(--texto-muted);';
+    p.textContent = 'Sin posteos este día.';
+    modal.appendChild(p);
+  }
+
+  posts.forEach(post => { modal.appendChild(buildPostBlock(post)); });
+
+  overlay.innerHTML = '';
+  overlay.appendChild(modal);
+}
+
+function buildPostBlock(post) {
+  const isEditing = editingPostId === post.id;
+  const block = document.createElement('div');
+  block.className = 'day-modal-post';
+
+  const head = document.createElement('div');
+  head.className = 'day-modal-post-head';
+  const netTag = document.createElement('span');
+  netTag.className = 'tag-network ' + post.network;
+  netTag.textContent = post.network.charAt(0).toUpperCase() + post.network.slice(1);
+  head.appendChild(netTag);
+  const typeTag = document.createElement('span');
+  typeTag.className = 'tag-type';
+  typeTag.textContent = post.format;
+  head.appendChild(typeTag);
+  if (post.pilar) {
+    const pilarTag = document.createElement('span');
+    pilarTag.className = 'tag-pilar';
+    pilarTag.textContent = (PILAR_ICON[post.pilar] || '') + ' ' + post.pilar;
+    head.appendChild(pilarTag);
+  }
+  block.appendChild(head);
+
+  if (isEditing) {
+    block.appendChild(buildEditForm(post));
+    return block;
+  }
+
+  const title = document.createElement('div');
+  title.className = 'day-modal-title2';
+  title.textContent = post.title;
+  block.appendChild(title);
+
+  if (post.slides && post.slides.length) {
+    const sl = document.createElement('div');
+    sl.className = 'day-modal-slides';
+    sl.style.whiteSpace = 'pre-wrap';
+    sl.textContent = post.slides.map((s,i) => (i+1) + '. ' + s).join('\n');
+    block.appendChild(sl);
+  }
+  if (post.placaText) {
+    const pl = document.createElement('div');
+    pl.className = 'day-modal-slides';
+    const strong = document.createElement('strong');
+    strong.textContent = 'Placa: ';
+    pl.appendChild(strong);
+    pl.appendChild(document.createTextNode(post.placaText));
+    block.appendChild(pl);
+  }
+  if (post.caption) {
+    const cap = document.createElement('div');
+    cap.className = 'day-modal-caption';
+    cap.textContent = post.caption;
+    block.appendChild(cap);
+  }
+
+  const htCount = (post.hashtags || []).length;
+  const htRow = document.createElement('div');
+  htRow.className = 'day-modal-hashtags';
+  const htSpan = document.createElement('span');
+  htSpan.textContent = (post.hashtags || []).join(' ');
+  htRow.appendChild(htSpan);
+  const countSpan = document.createElement('span');
+  countSpan.className = 'hashtag-count' + (htCount > 5 ? ' over-limit' : '');
+  countSpan.textContent = ' ' + htCount + '/5 hashtags';
+  htRow.appendChild(countSpan);
+  block.appendChild(htRow);
+
+  const actions = document.createElement('div');
+  actions.className = 'day-modal-actions';
+  if (currentMode === 'editor') {
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn-edit-post';
+    editBtn.textContent = '✏️ Editar';
+    editBtn.onclick = function() { editingPostId = post.id; renderDayModal(); };
+    actions.appendChild(editBtn);
+  }
+  const copyBtn = document.createElement('button');
+  copyBtn.className = 'card-copy-btn';
+  copyBtn.dataset.label = '📋 Copiar copy';
+  copyBtn.textContent = '📋 Copiar copy';
+  copyBtn.onclick = function() { copyBody(post.id, copyBtn); };
+  actions.appendChild(copyBtn);
+  block.appendChild(actions);
+
+  return block;
+}
+
+function buildEditForm(post) {
+  const wrap = document.createElement('div');
+
+  function field(labelText, initialValue, rows) {
+    const label = document.createElement('div');
+    label.className = 'edit-field-label';
+    label.textContent = labelText;
+    wrap.appendChild(label);
+    const ta = document.createElement('textarea');
+    ta.className = 'edit-textarea';
+    ta.rows = rows;
+    ta.value = initialValue;
+    wrap.appendChild(ta);
+    return ta;
+  }
+
+  const titleTa = field('Título', post.title, 2);
+  let slidesTa = null, placaTa = null;
+  if (post.slides) slidesTa = field('Slides (uno por línea)', post.slides.join('\n'), 6);
+  if (post.placaText !== undefined) placaTa = field('Texto de placa', post.placaText || '', 2);
+  const captionTa = field('Caption', post.caption || '', 4);
+  const hashtagsTa = field('Hashtags (separados por espacio, máx 5)', (post.hashtags || []).join(' '), 2);
+
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'btn-save-edit';
+  saveBtn.textContent = 'Guardar cambios';
+  saveBtn.onclick = function() {
+    const newHashtags = hashtagsTa.value.trim().split(/\s+/).filter(Boolean).slice(0, 5);
+    const fields = {
+      title: titleTa.value.trim(),
+      caption: captionTa.value.trim(),
+      hashtags: newHashtags
+    };
+    if (slidesTa) fields.slides = slidesTa.value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+    if (placaTa) fields.placaText = placaTa.value.trim();
+    Object.assign(post, fields);
+    saveEditOverride(post.id, fields);
+    editingPostId = null;
+    renderDayModal();
+    render();
+  };
+  wrap.appendChild(saveBtn);
+
+  return wrap;
+}
+
+window.toggleDayDone = toggleDayDone;
+window.openDayModal = openDayModal;
+window.closeDayModal = closeDayModal;
+
 function render() {
   updateProgress();
+
+  const addControls = document.querySelector('.add-controls');
+  if (data[currentMonthKey].viewType === 'grid') {
+    if (addControls) addControls.style.display = 'none';
+    renderAgostoGrid();
+    if (currentModalDate !== null) renderDayModal();
+    renderAdMaterial();
+    return;
+  }
+  if (addControls) addControls.style.display = '';
+
   const root = document.getElementById('weeks-root');
   root.innerHTML = '';
 
@@ -1156,6 +1710,7 @@ function renderAdMaterial() {
   root.appendChild(section);
 }
 
+applyEditOverrides();
 loadFromStorage();
 loadSlogansFromStorage();
 setMode('editor');
